@@ -133,6 +133,104 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-win11下安装docker环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/11/27/win11%E4%B8%8B%E5%AE%89%E8%A3%85docker%E7%8E%AF%E5%A2%83/">win11下安装docker环境</a>
+    </h1>
+  
+
+        
+        <a href="/2023/11/27/win11%E4%B8%8B%E5%AE%89%E8%A3%85docker%E7%8E%AF%E5%A2%83/" class="archive-article-date">
+  	<time datetime="2023-11-27T09:35:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>docker exec -it ubuntu &#x2F;bin&#x2F;bash</p>
+<p>docker run -d -p 3306:3306 –name mysql5.7 –privileged&#x3D;true -v D:\developer\docker-data\mysql-5.7\conf.d:&#x2F;etc&#x2F;mysql&#x2F;conf.d -v D:\developer\docker-data\mysql-5.7\logs:&#x2F;var&#x2F;log&#x2F;mysql -v D:\developer\docker-data\mysql-5.7\data:&#x2F;var&#x2F;lib&#x2F;mysql -e MYSQL_ROOT_PASSWORD&#x3D;root –restart&#x3D;always -d mysql:5.7</p>
+<p>docker run -it -p 9002:80 –name ubuntu -v D:\developer\docker-data\data:&#x2F;data -v D:\developer\docker-data\data\hosts:&#x2F;etc&#x2F;hosts –restart&#x3D;always -d ubuntu</p>
+<p>docker run -d -p 6379:6379 –name redis -v D:\developer\docker-data\redis\redis.conf:&#x2F;etc&#x2F;redis&#x2F;redis.conf -v D:\developer\docker-data\redis\data:&#x2F;data –restart&#x3D;always -d redis</p>
+<p>docker run -d -p 11211:11211 –name memcached -v D:\developer\docker-data\memcached\data:&#x2F;data –restart&#x3D;always -d memcached</p>
+<p>docker run -d -p 27017:27017 –name mongo -v D:\developer\docker-data\mongo\data:&#x2F;data –restart&#x3D;always -d mongo</p>
+<p>docker-php-ext-install opcache pdo pdo_mysql mysqli</p>
+<p>pecl install -o -f redis &amp;&amp; rm -rf &#x2F;tmp&#x2F;pear &amp;&amp; docker-php-ext-enable redis</p>
+<p>pecl install -o -f mongodb &amp;&amp; rm -rf &#x2F;tmp&#x2F;pear &amp;&amp; docker-php-ext-enable mongodb</p>
+<p>pecl install -o -f memcached &amp;&amp; rm -rf &#x2F;tmp&#x2F;pear &amp;&amp; docker-php-ext-enable memcached</p>
+<p>wget -q <a target="_blank" rel="noopener" href="https://packages.sury.org/php/apt.gpg">https://packages.sury.org/php/apt.gpg</a> – I  apt-key add echo “deb <a target="_blank" rel="noopener" href="https://packages.sury.org/php/stretchmain">https://packages.sury.org/php/stretchmain</a>“ |  tee &#x2F;etc&#x2F;apt&#x2F;sources.list.d&#x2F;php.list</p>
+<p>apt-get install software-properties-common<br>add-apt-repository ppa:ondrej&#x2F;php<br>apt-get update<br>apt-get install php7.3 php7.3-fpm  php7.3-mysql php7.3-cli php7.3-common php7.3-xml php7.3-curl php7.3-igbinary php7.3-opcache php7.3-phpdbg php7.3-readline php7.3-redis php7.3-memcache php7.3-mongodb php7.3-gd</p>
+<p>php7.2 -r “copy(‘<a target="_blank" rel="noopener" href="https://getcomposer.org/installer">https://getcomposer.org/installer</a>‘, ‘composer-setup.php’);”<br>php7.2 composer-setup.php –install-dir&#x3D;&#x2F;usr&#x2F;local&#x2F;bin –filename&#x3D;composer</p>
+<p>composer config -g repo.packagist composer <a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/composer/">https://mirrors.aliyun.com/composer/</a></p>
+<p>service nginx start<br>service php7.2-fpm start</p>
+<p>开机启动<br>update-rc.d nginx defaults<br>update-rc.d php7.2-fpm defaults</p>
+<p>php-fpm <a target="_blank" rel="noopener" href="http://www.conf监听文件改成监听端口/">www.conf监听文件改成监听端口</a></p>
+<p>dockre network相关<br>docker network create 网络名称<br>指定网络 docker network connect 网络名称 容器名称<br>解除绑定 docker network disconnect 网络名称 容器名称</p>
+<p>win下进入docker root dir的方法</p>
+<p>docker run –privileged -it -v &#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;var&#x2F;run&#x2F;docker.sock jongallant&#x2F;ubuntu-docker-client</p>
+<p>docker run –net&#x3D;host –ipc&#x3D;host –uts&#x3D;host –pid&#x3D;host -it –security-opt&#x3D;seccomp&#x3D;unconfined –privileged –rm -v &#x2F;:&#x2F;host alpine &#x2F;bin&#x2F;sh</p>
+<p>chroot &#x2F;host</p>
+<p>set-alias vim “D:\软件\Vim\vim90.\vim.exe”</p>
+<p>$VIMPATH&#x3D;”D:\Vim\vim90.\vim.exe”<br>Set-Alias vi $VIMPATH<br>Set-Alias vim $VIMPATH</p>
+<p>apt-get install mysql-server -y</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">win11 docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2023/11/27/win11%E4%B8%8B%E5%AE%89%E8%A3%85docker%E7%8E%AF%E5%A2%83/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CentOS安装Ruby" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -537,13 +635,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#x70;&#104;&#112;&#x40;&#x37;&#46;&#x32;">&#x70;&#104;&#112;&#x40;&#x37;&#46;&#x32;</a></p>
+        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#x70;&#104;&#x70;&#64;&#55;&#x2e;&#x32;">&#x70;&#104;&#x70;&#64;&#55;&#x2e;&#x32;</a></p>
 <p>可能是之前用brew安装了ffmpeg导致PHP的CLI环境出问题了，在CLI下执行PHP会报</p>
 <p>Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;openldap&#x2F;lib&#x2F;libldap-2.4.2.dylib</p>
 <p>说下解决方法，就是需要brew重装下php才行</p>
-<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#x70;&#104;&#x70;&#x40;&#55;&#x2e;&#x32;">&#x70;&#104;&#x70;&#x40;&#55;&#x2e;&#x32;</a>会报错</p>
-<p>Error: <a href="mailto:&#x70;&#104;&#112;&#64;&#x37;&#46;&#x32;">&#x70;&#104;&#112;&#64;&#x37;&#46;&#x32;</a> has been disabled because it is deprecated upstream!</p>
-<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#112;&#x68;&#112;&#x40;&#x37;&#46;&#50;">&#112;&#x68;&#112;&#x40;&#x37;&#46;&#50;</a><br>即可</p>
+<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#x70;&#104;&#112;&#64;&#x37;&#x2e;&#50;">&#x70;&#104;&#112;&#64;&#x37;&#x2e;&#50;</a>会报错</p>
+<p>Error: <a href="mailto:&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;">&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;</a> has been disabled because it is deprecated upstream!</p>
+<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#x70;&#x68;&#112;&#x40;&#x37;&#46;&#50;">&#x70;&#x68;&#112;&#x40;&#x37;&#46;&#50;</a><br>即可</p>
 <p>安装完成后问题得到解决！</p>
 
       
@@ -825,81 +923,6 @@
 
 
   
-    <article id="post-Hexo yilia主题翻页优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/13/Hexo%20yilia%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E4%BC%98%E5%8C%96/">Hexo yilia主题翻页优化</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/13/Hexo%20yilia%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E4%BC%98%E5%8C%96/" class="archive-article-date">
-  	<time datetime="2021-08-13T03:30:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="未优化前"><a href="#未优化前" class="headerlink" title="未优化前"></a>未优化前</h4><p><img src="https://i.loli.net/2021/08/13/NVctIzELo4y9eCP.png"></p>
-<h4 id="优化后"><a href="#优化后" class="headerlink" title="优化后"></a>优化后</h4><p><img src="https://i.loli.net/2021/08/13/4a7gRIslzymeU5p.png"></p>
-<h4 id="改动过程"><a href="#改动过程" class="headerlink" title="改动过程"></a>改动过程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">首先</span><br><span class="line">/themes/yilia/layout/_partial/archive.ejs</span><br><span class="line">全文搜索 &amp;laquo; Prev和 Next &amp;raquo 并改成 上一页和下一页</span><br><span class="line">改js总共要改两处地方</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">最后</span><br><span class="line">/themes/yilia/layout/_partial/script.ejs</span><br><span class="line">删除该文件里的Next &amp;raquo 和 &amp;laquo; Prev</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">hexo yilia</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/13/Hexo%20yilia%E4%B8%BB%E9%A2%98%E7%BF%BB%E9%A1%B5%E4%BC%98%E5%8C%96/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1029,11 +1052,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Clash Chrome</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+                <a href="javascript:void(0)" class="js-tag color3">Clash Chrome</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1114,6 +1137,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">satis composer webhook</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">win11 docker</a>
               </li>
              
               <li class="article-tag-list-item">
