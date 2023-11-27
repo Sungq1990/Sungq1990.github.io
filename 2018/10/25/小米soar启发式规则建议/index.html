@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>小米soar启发式规则建议 | 尐海的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="SOAR(SQL Optimizer And Rewriter)是一个对SQL进行优化和改写的自动化工具。 里面的启发式规则建议建议大家都看看，有利于提高sql水平">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小米soar启发式规则建议">
+<meta property="og:url" content="https://sgq.github.io/2018/10/25/%E5%B0%8F%E7%B1%B3soar%E5%90%AF%E5%8F%91%E5%BC%8F%E8%A7%84%E5%88%99%E5%BB%BA%E8%AE%AE/index.html">
+<meta property="og:site_name" content="尐海的博客">
+<meta property="og:description" content="SOAR(SQL Optimizer And Rewriter)是一个对SQL进行优化和改写的自动化工具。 里面的启发式规则建议建议大家都看看，有利于提高sql水平">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-25T09:39:14.000Z">
+<meta property="article:modified_time" content="2023-11-27T08:16:30.781Z">
+<meta property="article:author" content="sgq">
+<meta property="article:tag" content="soar mysql">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="尐海的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">尐海的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://sgq.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-小米soar启发式规则建议" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/10/25/%E5%B0%8F%E7%B1%B3soar%E5%90%AF%E5%8F%91%E5%BC%8F%E8%A7%84%E5%88%99%E5%BB%BA%E8%AE%AE/" class="article-date">
+  <time class="dt-published" datetime="2018-10-25T09:39:14.000Z" itemprop="datePublished">2018-10-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      小米soar启发式规则建议
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>SOAR(SQL Optimizer And Rewriter)是一个对SQL进行优化和改写的自动化工具。 里面的启发式规则建议建议大家都看看，有利于提高sql水平</p>
+<span id="more"></span>
+<h2 id="建议使用AS关键字显示声明一个别名"><a href="#建议使用AS关键字显示声明一个别名" class="headerlink" title="建议使用AS关键字显示声明一个别名"></a>建议使用AS关键字显示声明一个别名</h2><ul>
+<li><strong>Item</strong>:ALI.001</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:在列或表别名(如”tbl AS alias”)中, 明确使用AS关键字比隐含别名(如”tbl alias”)更易懂。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name <span class="keyword">from</span> tbl t1 <span class="keyword">where</span> id <span class="operator">&lt;</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<h2 id="不建议给列通配符’-‘设置别名"><a href="#不建议给列通配符’-‘设置别名" class="headerlink" title="不建议给列通配符’*‘设置别名"></a>不建议给列通配符’*‘设置别名</h2><ul>
+<li><strong>Item</strong>:ALI.002</li>
+<li><strong>Severity</strong>:L8</li>
+<li><strong>Content</strong>:例: “SELECT tbl.* col1, col2”上面这条SQL给列通配符设置了别名，这样的SQL可能存在逻辑错误。您可能意在查询col1, 但是代替它的是重命名的是tbl的最后一列。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> tbl.<span class="operator">*</span> <span class="keyword">as</span> c1,c2,c3 <span class="keyword">from</span> tbl <span class="keyword">where</span> id <span class="operator">&lt;</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<h2 id="别名不要与表或列的名字相同"><a href="#别名不要与表或列的名字相同" class="headerlink" title="别名不要与表或列的名字相同"></a>别名不要与表或列的名字相同</h2><ul>
+<li><strong>Item</strong>:ALI.003</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:表或列的别名与其真实名称相同, 这样的别名会使得查询更难去分辨。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name <span class="keyword">from</span> tbl <span class="keyword">as</span> tbl <span class="keyword">where</span> id <span class="operator">&lt;</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<h2 id="修改表的默认字符集不会改表各个字段的字符集"><a href="#修改表的默认字符集不会改表各个字段的字符集" class="headerlink" title="修改表的默认字符集不会改表各个字段的字符集"></a>修改表的默认字符集不会改表各个字段的字符集</h2><ul>
+<li><strong>Item</strong>:ALT.001</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:很多初学者会将ALTER TABLE tbl_name [DEFAULT] CHARACTER SET ‘UTF8’误认为会修改所有字段的字符集，但实际上它只会影响后续新增的字段不会改表已有字段的字符集。如果想修改整张表所有字段的字符集建议使用ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name;</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">CONVERT</span> <span class="keyword">TO</span> <span class="type">CHARACTER</span> <span class="keyword">SET</span> charset_name;</span><br></pre></td></tr></table></figure>
+<h2 id="同一张表的多条ALTER请求建议合为一条"><a href="#同一张表的多条ALTER请求建议合为一条" class="headerlink" title="同一张表的多条ALTER请求建议合为一条"></a>同一张表的多条ALTER请求建议合为一条</h2><ul>
+<li><strong>Item</strong>:ALT.002</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:每次表结构变更对线上服务都会产生影响，即使是能够通过在线工具进行调整也请尽量通过合并ALTER请求的试减少操作次数。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> col <span class="type">int</span>, <span class="keyword">ADD</span> INDEX idx_col (`col`);</span><br></pre></td></tr></table></figure>
+<h2 id="删除列为高危操作，操作前请注意检查业务逻辑是否还有依赖"><a href="#删除列为高危操作，操作前请注意检查业务逻辑是否还有依赖" class="headerlink" title="删除列为高危操作，操作前请注意检查业务逻辑是否还有依赖"></a>删除列为高危操作，操作前请注意检查业务逻辑是否还有依赖</h2><ul>
+<li><strong>Item</strong>:ALT.003</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:如业务逻辑依赖未完全消除，列被删除后可能导致数据无法写入或无法查询到已删除列数据导致程序异常的情况。这种情况下即使通过备份数据回滚也会丢失用户请求写入的数据。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl <span class="keyword">DROP</span> <span class="keyword">COLUMN</span> col;</span><br></pre></td></tr></table></figure>
+<h2 id="删除主键和外键为高危操作，操作前请与DBA确认影响"><a href="#删除主键和外键为高危操作，操作前请与DBA确认影响" class="headerlink" title="删除主键和外键为高危操作，操作前请与DBA确认影响"></a>删除主键和外键为高危操作，操作前请与DBA确认影响</h2><ul>
+<li><strong>Item</strong>:ALT.004</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:主键和外键为关系型数据库中两种重要约束，删除已有约束会打破已有业务逻辑，操作前请业务开发与DBA确认影响，三思而行。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl <span class="keyword">DROP</span> <span class="keyword">PRIMARY</span> KEY;</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用前项通配符查找"><a href="#不建议使用前项通配符查找" class="headerlink" title="不建议使用前项通配符查找"></a>不建议使用前项通配符查找</h2><ul>
+<li><strong>Item</strong>:ARG.001</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:例如“％foo”，查询参数有一个前项通配符的情况无法使用已有索引。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> tbl <span class="keyword">where</span> name <span class="keyword">like</span> <span class="string">&#x27;%foo&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="没有通配符的LIKE查询"><a href="#没有通配符的LIKE查询" class="headerlink" title="没有通配符的LIKE查询"></a>没有通配符的LIKE查询</h2><ul>
+<li><strong>Item</strong>:ARG.002</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:不包含通配符的LIKE查询可能存在逻辑错误，因为逻辑上它与等值查询相同。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> tbl <span class="keyword">where</span> name <span class="keyword">like</span> <span class="string">&#x27;foo&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="参数比较包含隐式转换，无法使用索引"><a href="#参数比较包含隐式转换，无法使用索引" class="headerlink" title="参数比较包含隐式转换，无法使用索引"></a>参数比较包含隐式转换，无法使用索引</h2><ul>
+<li><strong>Item</strong>:ARG.003</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:隐式类型转换有无法命中索引的风险，在高并发、大数据量的情况下，命不中索引带来的后果非常严重。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> sakila.film <span class="keyword">WHERE</span> length <span class="operator">&gt;=</span> <span class="string">&#x27;60&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="IN-NULL-NOT-IN-NULL-永远非真"><a href="#IN-NULL-NOT-IN-NULL-永远非真" class="headerlink" title="IN (NULL)&#x2F;NOT IN (NULL)永远非真"></a>IN (NULL)&#x2F;NOT IN (NULL)永远非真</h2><ul>
+<li><strong>Item</strong>:ARG.004</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:正确的作法是col IN (‘val1’, ‘val2’, ‘val3’) OR col IS NULL</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> sakila.film <span class="keyword">WHERE</span> length <span class="operator">&gt;=</span> <span class="string">&#x27;60&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="IN要慎用，元素过多会导致全表扫描"><a href="#IN要慎用，元素过多会导致全表扫描" class="headerlink" title="IN要慎用，元素过多会导致全表扫描"></a>IN要慎用，元素过多会导致全表扫描</h2><ul>
+<li><strong>Item</strong>:ARG.005</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>: 如：select id from t where num in(1,2,3)对于连续的数值，能用BETWEEN就不要用IN了：select id from t where num between 1 and 3。而当IN值过多时MySQL也可能会进入全表扫描导致性能急剧下降。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> t <span class="keyword">where</span> num <span class="keyword">in</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="应尽量避免在WHERE子句中对字段进行NULL值判断"><a href="#应尽量避免在WHERE子句中对字段进行NULL值判断" class="headerlink" title="应尽量避免在WHERE子句中对字段进行NULL值判断"></a>应尽量避免在WHERE子句中对字段进行NULL值判断</h2><ul>
+<li><strong>Item</strong>:ARG.006</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:使用IS NULL或IS NOT NULL将可能导致引擎放弃使用索引而进行全表扫描，如：select id from t where num is null;可以在num上设置默认值0，确保表中num列没有null值，然后这样查询： select id from t where num&#x3D;0;</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> t <span class="keyword">where</span> num <span class="keyword">is</span> <span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<h2 id="避免使用模式匹配"><a href="#避免使用模式匹配" class="headerlink" title="避免使用模式匹配"></a>避免使用模式匹配</h2><ul>
+<li><strong>Item</strong>:ARG.007</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:性能问题是使用模式匹配操作符的最大缺点。使用LIKE或正则表达式进行模式匹配进行查询的另一个问题，是可能会返回意料之外的结果。最好的方案就是使用特殊的搜索引擎技术来替代SQL，比如Apache Lucene。另一个可选方案是将结果保存起来从而减少重复的搜索开销。如果一定要使用SQL，请考虑在MySQL中使用像FULLTEXT索引这样的第三方扩展。但更广泛地说，您不一定要使用SQL来解决所有问题。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c_id,c2,c3 <span class="keyword">from</span> tbl <span class="keyword">where</span> c2 <span class="keyword">like</span> <span class="string">&#x27;test%&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="OR查询索引列时请尽量使用IN谓词"><a href="#OR查询索引列时请尽量使用IN谓词" class="headerlink" title="OR查询索引列时请尽量使用IN谓词"></a>OR查询索引列时请尽量使用IN谓词</h2><ul>
+<li><strong>Item</strong>:ARG.008</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:IN-list谓词可以用于索引检索，并且优化器可以对IN-list进行排序，以匹配索引的排序序列，从而获得更有效的检索。请注意，IN-list必须只包含常量，或在查询块执行期间保持常量的值，例如外引用。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c1,c2,c3 <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> c1 <span class="operator">=</span> <span class="number">14</span> <span class="keyword">OR</span> c1 <span class="operator">=</span> <span class="number">17</span></span><br></pre></td></tr></table></figure>
+<h2 id="引号中的字符串开头或结尾包含空格"><a href="#引号中的字符串开头或结尾包含空格" class="headerlink" title="引号中的字符串开头或结尾包含空格"></a>引号中的字符串开头或结尾包含空格</h2><ul>
+<li><strong>Item</strong>:ARG.009</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:如果VARCHAR列的前后存在空格将可能引起逻辑问题，如在MySQL 5.5中’a’和’a ‘可能会在查询中被认为是相同的值。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">&#x27;abc &#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="不要使用hint，如sql-no-cache，force-index，ignore-key，straight-join等"><a href="#不要使用hint，如sql-no-cache，force-index，ignore-key，straight-join等" class="headerlink" title="不要使用hint，如sql_no_cache，force index，ignore key，straight join等"></a>不要使用hint，如sql_no_cache，force index，ignore key，straight join等</h2><ul>
+<li><strong>Item</strong>:ARG.010</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:hint是用来强制SQL按照某个执行计划来执行，但随着数据量变化我们无法保证自己当初的预判是正确的。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">&#x27;abc &#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="不要使用负向查询，如：NOT-IN-NOT-LIKE"><a href="#不要使用负向查询，如：NOT-IN-NOT-LIKE" class="headerlink" title="不要使用负向查询，如：NOT IN&#x2F;NOT LIKE"></a>不要使用负向查询，如：NOT IN&#x2F;NOT LIKE</h2><ul>
+<li><strong>Item</strong>:ARG.011</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:请尽量不要使用负向查询，这将导致全表扫描，对查询性能影响较大。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> t <span class="keyword">where</span> num <span class="keyword">not</span> <span class="keyword">in</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="最外层SELECT未指定WHERE条件"><a href="#最外层SELECT未指定WHERE条件" class="headerlink" title="最外层SELECT未指定WHERE条件"></a>最外层SELECT未指定WHERE条件</h2><ul>
+<li><strong>Item</strong>:CLA.001</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:SELECT语句没有WHERE子句，可能检查比预期更多的行(全表扫描)。对于SELECT COUNT(*)类型的请求如果不要求精度，建议使用SHOW TABLE STATUS或EXPLAIN替代。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> tbl</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用ORDER-BY-RAND"><a href="#不建议使用ORDER-BY-RAND" class="headerlink" title="不建议使用ORDER BY RAND()"></a>不建议使用ORDER BY RAND()</h2><ul>
+<li><strong>Item</strong>:CLA.002</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:ORDER BY RAND()是从结果集中检索随机行的一种非常低效的方法，因为它会对整个结果进行排序并丢弃其大部分数据。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> name <span class="keyword">from</span> tbl <span class="keyword">where</span> id <span class="operator">&lt;</span> <span class="number">1000</span> <span class="keyword">order</span> <span class="keyword">by</span> rand(number)</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用带OFFSET的LIMIT查询"><a href="#不建议使用带OFFSET的LIMIT查询" class="headerlink" title="不建议使用带OFFSET的LIMIT查询"></a>不建议使用带OFFSET的LIMIT查询</h2><ul>
+<li><strong>Item</strong>:CLA.003</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:使用LIMIT和OFFSET对结果集分页的复杂度是O(n^2)，并且会随着数据增大而导致性能问题。采用“书签”扫描的方法实现分页效率更高。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2 <span class="keyword">from</span> tbl <span class="keyword">where</span> name<span class="operator">=</span>xx <span class="keyword">order</span> <span class="keyword">by</span> number limit <span class="number">1</span> <span class="keyword">offset</span> <span class="number">20</span></span><br></pre></td></tr></table></figure>
+<h2 id="不建议对常量进行GROUP-BY"><a href="#不建议对常量进行GROUP-BY" class="headerlink" title="不建议对常量进行GROUP BY"></a>不建议对常量进行GROUP BY</h2><ul>
+<li><strong>Item</strong>:CLA.004</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:GROUP BY 1 表示按第一列进行GROUP BY。如果在GROUP BY子句中使用数字，而不是表达式或列名称，当查询列顺序改变时，可能会导致问题。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col1,col2 <span class="keyword">from</span> tbl <span class="keyword">group</span> <span class="keyword">by</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="ORDER-BY常数列没有任何意义"><a href="#ORDER-BY常数列没有任何意义" class="headerlink" title="ORDER BY常数列没有任何意义"></a>ORDER BY常数列没有任何意义</h2><ul>
+<li><strong>Item</strong>:CLA.005</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:SQL逻辑上可能存在错误; 最多只是一个无用的操作，不会更改查询结果。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> test <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span> <span class="keyword">order</span> <span class="keyword">by</span> id</span><br></pre></td></tr></table></figure>
+<h2 id="在不同的表中GROUP-BY或ORDER-BY"><a href="#在不同的表中GROUP-BY或ORDER-BY" class="headerlink" title="在不同的表中GROUP BY或ORDER BY"></a>在不同的表中GROUP BY或ORDER BY</h2><ul>
+<li><strong>Item</strong>:CLA.006</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:这将强制使用临时表和filesort，可能产生巨大性能隐患，并且可能消耗大量内存和磁盘上的临时空间。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> tb1.col, tb2.col <span class="keyword">from</span> tb1, tb2 <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span> <span class="keyword">group</span> <span class="keyword">by</span> tb1.col, tb2.col</span><br></pre></td></tr></table></figure>
+<h2 id="ORDER-BY语句对多个不同条件使用不同方向的排序无法使用索引"><a href="#ORDER-BY语句对多个不同条件使用不同方向的排序无法使用索引" class="headerlink" title="ORDER BY语句对多个不同条件使用不同方向的排序无法使用索引"></a>ORDER BY语句对多个不同条件使用不同方向的排序无法使用索引</h2><ul>
+<li><strong>Item</strong>:CLA.007</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:ORDER BY子句中的所有表达式必须按统一的ASC或DESC方向排序，以便利用索引。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> t1 <span class="keyword">where</span> c1<span class="operator">=</span><span class="string">&#x27;foo&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> c2 <span class="keyword">desc</span>, c3 <span class="keyword">asc</span></span><br></pre></td></tr></table></figure>
+<h2 id="请为GROUP-BY显示添加ORDER-BY条件"><a href="#请为GROUP-BY显示添加ORDER-BY条件" class="headerlink" title="请为GROUP BY显示添加ORDER BY条件"></a>请为GROUP BY显示添加ORDER BY条件</h2><ul>
+<li><strong>Item</strong>:CLA.008</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:默认MySQL会对’GROUP BY col1, col2, …’请求按如下顺序排序’ORDER BY col1, col2, …’。如果GROUP BY语句不指定ORDER BY条件会导致无谓的排序产生，如果不需要排序建议添加’ORDER BY NULL’。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> t1 <span class="keyword">where</span> c1<span class="operator">=</span><span class="string">&#x27;foo&#x27;</span> <span class="keyword">group</span> <span class="keyword">by</span> c2</span><br></pre></td></tr></table></figure>
+<h2 id="ORDER-BY的条件为表达式"><a href="#ORDER-BY的条件为表达式" class="headerlink" title="ORDER BY的条件为表达式"></a>ORDER BY的条件为表达式</h2><ul>
+<li><strong>Item</strong>:CLA.009</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:当ORDER BY条件为表达式或函数时会使用到临时表，如果在未指定WHERE或WHERE条件返回的结果集较大时性能会很差。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> description <span class="keyword">from</span> film <span class="keyword">where</span> title <span class="operator">=</span><span class="string">&#x27;ACADEMY DINOSAUR&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> length<span class="operator">-</span>language_id;</span><br></pre></td></tr></table></figure>
+<h2 id="GROUP-BY的条件为表达式"><a href="#GROUP-BY的条件为表达式" class="headerlink" title="GROUP BY的条件为表达式"></a>GROUP BY的条件为表达式</h2><ul>
+<li><strong>Item</strong>:CLA.010</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:当GROUP BY条件为表达式或函数时会使用到临时表，如果在未指定WHERE或WHERE条件返回的结果集较大时性能会很差。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> description <span class="keyword">from</span> film <span class="keyword">where</span> title <span class="operator">=</span><span class="string">&#x27;ACADEMY DINOSAUR&#x27;</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> length<span class="operator">-</span>language_id;</span><br></pre></td></tr></table></figure>
+<h2 id="建议为表添加注释"><a href="#建议为表添加注释" class="headerlink" title="建议为表添加注释"></a>建议为表添加注释</h2><ul>
+<li><strong>Item</strong>:CLA.011</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:为表添加注释能够使得表的意义更明确，从而为日后的维护带来极大的便利。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `test1` (`ID` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,`c1` <span class="type">varchar</span>(<span class="number">128</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,<span class="keyword">PRIMARY</span> KEY (`ID`)) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8</span><br></pre></td></tr></table></figure>
+<h2 id="将复杂的裹脚布式查询分解成几个简单的查询"><a href="#将复杂的裹脚布式查询分解成几个简单的查询" class="headerlink" title="将复杂的裹脚布式查询分解成几个简单的查询"></a>将复杂的裹脚布式查询分解成几个简单的查询</h2><ul>
+<li><strong>Item</strong>:CLA.012</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:SQL是一门极具表现力的语言，您可以在单个SQL查询或者单条语句中完成很多事情。但这并不意味着必须强制只使用一行代码，或者认为使用一行代码就搞定每个任务是个好主意。通过一个查询来获得所有结果的常见后果是得到了一个笛卡儿积。当查询中的两张表之间没有条件限制它们的关系时，就会发生这种情况。没有对应的限制而直接使用两张表进行联结查询，就会得到第一张表中的每一行和第二张表中的每一行的一个组合。每一个这样的组合就会成为结果集中的一行，最终您就会得到一个行数很多的结果集。重要的是要考虑这些查询很难编写、难以修改和难以调试。数据库查询请求的日益增加应该是预料之中的事。经理们想要更复杂的报告以及在用户界面上添加更多的字段。如果您的设计很复杂，并且是一个单一查询，要扩展它们就会很费时费力。不论对您还是项目来说，时间花在这些事情上面不值得。将复杂的意大利面条式查询分解成几个简单的查询。当您拆分一个复杂的SQL查询时，得到的结果可能是很多类似的查询，可能仅仅在数据类型上有所不同。编写所有的这些查询是很乏味的，因此，最好能够有个程序自动生成这些代码。SQL代码生成是一个很好的应用。尽管SQL支持用一行代码解决复杂的问题，但也别做不切实际的事情。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是一条很长很长的<span class="keyword">SQL</span>，案例略。</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用HAVING子句"><a href="#不建议使用HAVING子句" class="headerlink" title="不建议使用HAVING子句"></a>不建议使用HAVING子句</h2><ul>
+<li><strong>Item</strong>:CLA.013</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:将查询的HAVING子句改写为WHERE中的查询条件，可以在查询处理期间使用索引。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s.c_id,<span class="built_in">count</span>(s.c_id) <span class="keyword">FROM</span> s <span class="keyword">where</span> c <span class="operator">=</span> test <span class="keyword">GROUP</span> <span class="keyword">BY</span> s.c_id <span class="keyword">HAVING</span> s.c_id <span class="operator">&lt;&gt;</span> <span class="string">&#x27;1660&#x27;</span> <span class="keyword">AND</span> s.c_id <span class="operator">&lt;&gt;</span> <span class="string">&#x27;2&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> s.c_id</span><br></pre></td></tr></table></figure>
+<h2 id="删除全表时建议使用TRUNCATE替代DELETE"><a href="#删除全表时建议使用TRUNCATE替代DELETE" class="headerlink" title="删除全表时建议使用TRUNCATE替代DELETE"></a>删除全表时建议使用TRUNCATE替代DELETE</h2><ul>
+<li><strong>Item</strong>:CLA.014</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:删除全表时建议使用TRUNCATE替代DELETE</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> tbl</span><br></pre></td></tr></table></figure>
+<h2 id="UPDATE未指定WHERE条件"><a href="#UPDATE未指定WHERE条件" class="headerlink" title="UPDATE未指定WHERE条件"></a>UPDATE未指定WHERE条件</h2><ul>
+<li><strong>Item</strong>:CLA.015</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:UPDATE不指定WHERE条件一般是致命的，请您三思后行</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> tbl <span class="keyword">set</span> col<span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="不要UPDATE主键"><a href="#不要UPDATE主键" class="headerlink" title="不要UPDATE主键"></a>不要UPDATE主键</h2><ul>
+<li><strong>Item</strong>:CLA.016</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:主键是数据表中记录的唯一标识符，不建议频繁更新主键列，这将影响元数据统计信息进而影响正常的查询。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> tbl <span class="keyword">set</span> col<span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用存储过程、视图、触发器、临时表等"><a href="#不建议使用存储过程、视图、触发器、临时表等" class="headerlink" title="不建议使用存储过程、视图、触发器、临时表等"></a>不建议使用存储过程、视图、触发器、临时表等</h2><ul>
+<li><strong>Item</strong>:CLA.017</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:这些功能的使用在一定程度上会使得程序难以调试和拓展，更没有移植性，且会极大的增加出现BUG的概率。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> v_today (today) <span class="keyword">AS</span> <span class="keyword">SELECT</span> <span class="built_in">CURRENT_DATE</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用SELECT-类型查询"><a href="#不建议使用SELECT-类型查询" class="headerlink" title="不建议使用SELECT * 类型查询"></a>不建议使用SELECT * 类型查询</h2><ul>
+<li><strong>Item</strong>:COL.001</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:当表结构变更时，使用*通配符选择所有列将导致查询的含义和行为会发生更改，可能导致查询返回更多的数据。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tbl <span class="keyword">where</span> id<span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="INSERT未指定列名"><a href="#INSERT未指定列名" class="headerlink" title="INSERT未指定列名"></a>INSERT未指定列名</h2><ul>
+<li><strong>Item</strong>:COL.002</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:当表结构发生变更，如果INSERT或REPLACE请求不明确指定列名，请求的结果将会与预想的不同; 建议使用“INSERT INTO tbl(col1，col2)VALUES …”代替。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tbl <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">&#x27;name&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="建议修改自增ID为无符号类型"><a href="#建议修改自增ID为无符号类型" class="headerlink" title="建议修改自增ID为无符号类型"></a>建议修改自增ID为无符号类型</h2><ul>
+<li><strong>Item</strong>:COL.003</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:建议修改自增ID为无符号类型</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test(`id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT)</span><br></pre></td></tr></table></figure>
+<h2 id="请为列添加默认值"><a href="#请为列添加默认值" class="headerlink" title="请为列添加默认值"></a>请为列添加默认值</h2><ul>
+<li><strong>Item</strong>:COL.004</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:请为列添加默认值，如果是ALTER操作，请不要忘记将原字段的默认值写上。字段无默认值，当表较大时无法在线变更表结构。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl (col <span class="type">int</span>) ENGINE<span class="operator">=</span>InnoDB;</span><br></pre></td></tr></table></figure>
+<h2 id="列未添加注释"><a href="#列未添加注释" class="headerlink" title="列未添加注释"></a>列未添加注释</h2><ul>
+<li><strong>Item</strong>:COL.005</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:建议对表中每个列添加注释，来明确每个列在表中的含义及作用。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl (col <span class="type">int</span>) ENGINE<span class="operator">=</span>InnoDB;</span><br></pre></td></tr></table></figure>
+<h2 id="表中包含有太多的列"><a href="#表中包含有太多的列" class="headerlink" title="表中包含有太多的列"></a>表中包含有太多的列</h2><ul>
+<li><strong>Item</strong>:COL.006</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:表中包含有太多的列</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl ( cols ....);</span><br></pre></td></tr></table></figure>
+<h2 id="可使用VARCHAR代替CHAR，VARBINARY代替BINARY"><a href="#可使用VARCHAR代替CHAR，VARBINARY代替BINARY" class="headerlink" title="可使用VARCHAR代替CHAR，VARBINARY代替BINARY"></a>可使用VARCHAR代替CHAR，VARBINARY代替BINARY</h2><ul>
+<li><strong>Item</strong>:COL.008</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:为首先变长字段存储空间小，可以节省存储空间。其次对于查询来说，在一个相对较小的字段内搜索效率显然要高些。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1(id <span class="type">int</span>,name <span class="type">char</span>(<span class="number">20</span>),last_time <span class="type">date</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="建议使用精确的数据类型"><a href="#建议使用精确的数据类型" class="headerlink" title="建议使用精确的数据类型"></a>建议使用精确的数据类型</h2><ul>
+<li><strong>Item</strong>:COL.009</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:实际上，任何使用FLOAT、REAL或DOUBLE PRECISION数据类型的设计都有可能是反模式。大多数应用程序使用的浮点数的取值范围并不需要达到IEEE 754标准所定义的最大&#x2F;最小区间。在计算总量时，非精确浮点数所积累的影响是严重的。使用SQL中的NUMERIC或DECIMAL类型来代替FLOAT及其类似的数据类型进行固定精度的小数存储。这些数据类型精确地根据您定义这一列时指定的精度来存储数据。尽可能不要使用浮点数。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tab2 (p_id  <span class="type">BIGINT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span>,a_id  <span class="type">BIGINT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span>,hours <span class="type">float</span> <span class="keyword">not</span> <span class="keyword">null</span>,<span class="keyword">PRIMARY</span> KEY (p_id, a_id))</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用ENUM数据类型"><a href="#不建议使用ENUM数据类型" class="headerlink" title="不建议使用ENUM数据类型"></a>不建议使用ENUM数据类型</h2><ul>
+<li><strong>Item</strong>:COL.010</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:ENUM定义了列中值的类型，使用字符串表示ENUM里的值时，实际存储在列中的数据是这些值在定义时的序数。因此，这列的数据是字节对齐的，当您进行一次排序查询时，结果是按照实际存储的序数值排序的，而不是按字符串值的字母顺序排序的。这可能不是您所希望的。没有什么语法支持从ENUM或者check约束中添加或删除一个值；您只能使用一个新的集合重新定义这一列。如果您打算废弃一个选项，您可能会为历史数据而烦恼。作为一种策略，改变元数据——也就是说，改变表和列的定义——应该是不常见的，并且要注意测试和质量保证。有一个更好的解决方案来约束一列中的可选值:创建一张检查表，每一行包含一个允许在列中出现的候选值；然后在引用新表的旧表上声明一个外键约束。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tab1(status ENUM(<span class="string">&#x27;new&#x27;</span>,<span class="string">&#x27;in progress&#x27;</span>,<span class="string">&#x27;fixed&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="当需要唯一约束时才使用NULL，仅当列不能有缺失值时才使用NOT-NULL"><a href="#当需要唯一约束时才使用NULL，仅当列不能有缺失值时才使用NOT-NULL" class="headerlink" title="当需要唯一约束时才使用NULL，仅当列不能有缺失值时才使用NOT NULL"></a>当需要唯一约束时才使用NULL，仅当列不能有缺失值时才使用NOT NULL</h2><ul>
+<li><strong>Item</strong>:COL.011</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:NULL和0是不同的，10乘以NULL还是NULL。NULL和空字符串是不一样的。将一个字符串和标准SQL中的NULL联合起来的结果还是NULL。NULL和FALSE也是不同的。AND、OR和NOT这三个布尔操作如果涉及NULL，其结果也让很多人感到困惑。当您将一列声明为NOT NULL时，也就是说这列中的每一个值都必须存在且是有意义的。使用NULL来表示任意类型不存在的空值。 当您将一列声明为NOT NULL时，也就是说这列中的每一个值都必须存在且是有意义的。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> tbl <span class="keyword">where</span> c4 <span class="keyword">is</span> <span class="keyword">null</span> <span class="keyword">or</span> c4 <span class="operator">&lt;&gt;</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="BLOB和TEXT类型的字段不可设置为NULL"><a href="#BLOB和TEXT类型的字段不可设置为NULL" class="headerlink" title="BLOB和TEXT类型的字段不可设置为NULL"></a>BLOB和TEXT类型的字段不可设置为NULL</h2><ul>
+<li><strong>Item</strong>:COL.012</li>
+<li><strong>Severity</strong>:L5</li>
+<li><strong>Content</strong>:BLOB和TEXT类型的字段不可设置为NULL</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `tbl` ( `id` <span class="type">int</span>(<span class="number">10</span>) unsigned <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT, `c` longblob, <span class="keyword">PRIMARY</span> KEY (`id`));</span><br></pre></td></tr></table></figure>
+<h2 id="TIMESTAMP类型未设置默认值"><a href="#TIMESTAMP类型未设置默认值" class="headerlink" title="TIMESTAMP类型未设置默认值"></a>TIMESTAMP类型未设置默认值</h2><ul>
+<li><strong>Item</strong>:COL.013</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:TIMESTAMP类型未设置默认值</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl( `id` <span class="type">bigint</span> <span class="keyword">not</span> <span class="keyword">null</span>, `create_time` <span class="type">timestamp</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="为列指定了字符集"><a href="#为列指定了字符集" class="headerlink" title="为列指定了字符集"></a>为列指定了字符集</h2><ul>
+<li><strong>Item</strong>:COL.014</li>
+<li><strong>Severity</strong>:L5</li>
+<li><strong>Content</strong>:建议列与表使用同一个字符集，不要单独指定列的字符集。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `tb2` ( `id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>, `col` <span class="type">char</span>(<span class="number">10</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="BLOB类型的字段不可指定默认值"><a href="#BLOB类型的字段不可指定默认值" class="headerlink" title="BLOB类型的字段不可指定默认值"></a>BLOB类型的字段不可指定默认值</h2><ul>
+<li><strong>Item</strong>:COL.015</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:BLOB类型的字段不可指定默认值</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `tbl` ( `id` <span class="type">int</span>(<span class="number">10</span>) unsigned <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT, `c` <span class="type">blob</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">&#x27;&#x27;</span>, <span class="keyword">PRIMARY</span> KEY (`id`));</span><br></pre></td></tr></table></figure>
+<h2 id="整型定义建议采用INT-10-或BIGINT-20"><a href="#整型定义建议采用INT-10-或BIGINT-20" class="headerlink" title="整型定义建议采用INT(10)或BIGINT(20)"></a>整型定义建议采用INT(10)或BIGINT(20)</h2><ul>
+<li><strong>Item</strong>:COL.016</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:INT(M) 在 integer 数据类型中，M 表示最大显示宽度。 在 INT(M) 中，M 的值跟 INT(M) 所占多少存储空间并无任何关系。 INT(3)、INT(4)、INT(8) 在磁盘上都是占用 4 bytes 的存储空间。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tab (a <span class="type">INT</span>(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="varchar定义长度过长"><a href="#varchar定义长度过长" class="headerlink" title="varchar定义长度过长"></a>varchar定义长度过长</h2><ul>
+<li><strong>Item</strong>:COL.017</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:varchar 是可变长字符串，不预先分配存储空间，长度不要超过1024，如果存储长度过长MySQL将定义字段类型为text，独立出来一张表，用主键来对应，避免影响其它字段索引效率。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tab (a <span class="type">varchar</span>(<span class="number">3500</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="消除不必要的DISTINCT条件"><a href="#消除不必要的DISTINCT条件" class="headerlink" title="消除不必要的DISTINCT条件"></a>消除不必要的DISTINCT条件</h2><ul>
+<li><strong>Item</strong>:DIS.001</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:太多DISTINCT条件是复杂的裹脚布式查询的症状。考虑将复杂查询分解成许多简单的查询，并减少DISTINCT条件的数量。如果主键列是列的结果集的一部分，则DISTINCT条件可能没有影响。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> c.c_id,<span class="built_in">count</span>(<span class="keyword">DISTINCT</span> c.c_name),<span class="built_in">count</span>(<span class="keyword">DISTINCT</span> c.c_e),<span class="built_in">count</span>(<span class="keyword">DISTINCT</span> c.c_n),<span class="built_in">count</span>(<span class="keyword">DISTINCT</span> c.c_me),c.c_d <span class="keyword">FROM</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> xing, name <span class="keyword">from</span> B) <span class="keyword">as</span> e <span class="keyword">WHERE</span> e.country_id <span class="operator">=</span> c.country_id</span><br></pre></td></tr></table></figure>
+<h2 id="COUNT-DISTINCT-多列时结果可能和你预想的不同"><a href="#COUNT-DISTINCT-多列时结果可能和你预想的不同" class="headerlink" title="COUNT(DISTINCT)多列时结果可能和你预想的不同"></a>COUNT(DISTINCT)多列时结果可能和你预想的不同</h2><ul>
+<li><strong>Item</strong>:DIS.002</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:COUNT(DISTINCT col)计算该列除NULL之外的不重复行数，注意COUNT(DISTINCT col, col2)如果其中一列全为NULL那么即使另一列有不同的值，也返回0。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="keyword">DISTINCT</span> col, col2) <span class="keyword">FROM</span> tbl;</span><br></pre></td></tr></table></figure>
+<h2 id="DISTINCT-对有主键的表没有意义"><a href="#DISTINCT-对有主键的表没有意义" class="headerlink" title="DISTINCT *对有主键的表没有意义"></a>DISTINCT *对有主键的表没有意义</h2><ul>
+<li><strong>Item</strong>:DIS.003</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:当表已经有主键时，对所有列进行DISTINCT的输出结果与不进行DISTINCT操作的结果相同，请不要画蛇添足。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="operator">*</span> <span class="keyword">FROM</span> film;</span><br></pre></td></tr></table></figure>
+<h2 id="避免在WHERE条件中使用函数或其他运算符"><a href="#避免在WHERE条件中使用函数或其他运算符" class="headerlink" title="避免在WHERE条件中使用函数或其他运算符"></a>避免在WHERE条件中使用函数或其他运算符</h2><ul>
+<li><strong>Item</strong>:FUN.001</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:虽然在SQL中使用函数可以简化很多复杂的查询，但使用了函数的查询无法利用表中已经建立的索引，该查询将会是全表扫描，性能较差。通常建议将列名写在比较运算符左侧，将查询过滤条件放在比较运算符右侧。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> t <span class="keyword">where</span> <span class="built_in">substring</span>(name,<span class="number">1</span>,<span class="number">3</span>)<span class="operator">=</span><span class="string">&#x27;abc&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="指定了WHERE条件或非MyISAM引擎时使用COUNT-操作性能不佳"><a href="#指定了WHERE条件或非MyISAM引擎时使用COUNT-操作性能不佳" class="headerlink" title="指定了WHERE条件或非MyISAM引擎时使用COUNT(*)操作性能不佳"></a>指定了WHERE条件或非MyISAM引擎时使用COUNT(*)操作性能不佳</h2><ul>
+<li><strong>Item</strong>:FUN.002</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:COUNT(*)的作用是统计表行数，COUNT(COL)的作用是统计指定列非NULL的行数。MyISAM表对于COUNT(*)统计全表行数进行了特殊的优化，通常情况下非常快。但对于非MyISAM表或指定了某些WHERE条件，COUNT(*)操作需要扫描大量的行才能获取精确的结果，性能也因此不佳。有时候某些业务场景并不需要完全精确的COUNT值，此时可以用近似值来代替。EXPLAIN出来的优化器估算的行数就是一个不错的近似值，执行EXPLAIN并不需要真正去执行查询，所以成本很低。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c3, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> accounts <span class="keyword">FROM</span> tab <span class="keyword">where</span> c2 <span class="operator">&lt;</span> <span class="number">10000</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> c3 <span class="keyword">ORDER</span> <span class="keyword">BY</span> num</span><br></pre></td></tr></table></figure>
+<h2 id="使用了合并为可空列的字符串连接"><a href="#使用了合并为可空列的字符串连接" class="headerlink" title="使用了合并为可空列的字符串连接"></a>使用了合并为可空列的字符串连接</h2><ul>
+<li><strong>Item</strong>:FUN.003</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:在一些查询请求中，您需要强制让某一列或者某个表达式返回非NULL的值，从而让查询逻辑变得更简单，担忧不想将这个值存下来。使用COALESCE()函数来构造连接的表达式，这样即使是空值列也不会使整表达式变为NULL。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1 <span class="operator">||</span> <span class="built_in">coalesce</span>(<span class="string">&#x27; &#x27;</span> <span class="operator">||</span> c2 <span class="operator">||</span> <span class="string">&#x27; &#x27;</span>, <span class="string">&#x27; &#x27;</span>) <span class="operator">||</span> c3 <span class="keyword">as</span> c <span class="keyword">from</span> tbl</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用SYSDATE-函数"><a href="#不建议使用SYSDATE-函数" class="headerlink" title="不建议使用SYSDATE()函数"></a>不建议使用SYSDATE()函数</h2><ul>
+<li><strong>Item</strong>:FUN.004</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:SYSDATE()函数可能导致主从数据不一致，请使用NOW()函数替代SYSDATE()。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SYSDATE();</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用COUNT-col-或COUNT-常量"><a href="#不建议使用COUNT-col-或COUNT-常量" class="headerlink" title="不建议使用COUNT(col)或COUNT(常量)"></a>不建议使用COUNT(col)或COUNT(常量)</h2><ul>
+<li><strong>Item</strong>:FUN.005</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:不要使用COUNT(col)或COUNT(常量)来替代COUNT(*),COUNT(*)是SQL92定义的标准统计行数的方法，跟数据无关，跟NULL和非NULL也无关。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="number">1</span>) <span class="keyword">FROM</span> tbl;</span><br></pre></td></tr></table></figure>
+<h2 id="使用SUM-COL-时需注意NPE问题"><a href="#使用SUM-COL-时需注意NPE问题" class="headerlink" title="使用SUM(COL)时需注意NPE问题"></a>使用SUM(COL)时需注意NPE问题</h2><ul>
+<li><strong>Item</strong>:FUN.006</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:当某一列的值全是NULL时，COUNT(COL)的返回结果为0,但SUM(COL)的返回结果为NULL,因此使用SUM()时需注意NPE问题。可以使用如下方式来避免SUM的NPE问题: SELECT IF(ISNULL(SUM(COL)), 0, SUM(COL)) FROM tbl</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUM</span>(COL) <span class="keyword">FROM</span> tbl;</span><br></pre></td></tr></table></figure>
+<h2 id="不建议对等值查询列使用GROUP-BY"><a href="#不建议对等值查询列使用GROUP-BY" class="headerlink" title="不建议对等值查询列使用GROUP BY"></a>不建议对等值查询列使用GROUP BY</h2><ul>
+<li><strong>Item</strong>:GRP.001</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:GROUP BY中的列在前面的WHERE条件中使用了等值查询，对这样的列进行GROUP BY意义不大。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> film_id, title <span class="keyword">from</span> film <span class="keyword">where</span> release_year<span class="operator">=</span><span class="string">&#x27;2006&#x27;</span> <span class="keyword">group</span> <span class="keyword">by</span> release_year</span><br></pre></td></tr></table></figure>
+<h2 id="JOIN语句混用逗号和ANSI模式"><a href="#JOIN语句混用逗号和ANSI模式" class="headerlink" title="JOIN语句混用逗号和ANSI模式"></a>JOIN语句混用逗号和ANSI模式</h2><ul>
+<li><strong>Item</strong>:JOI.001</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:表连接的时候混用逗号和ANSI JOIN不便于人类理解，并且MySQL不同版本的表连接行为和优先级均有所不同，当MySQL版本变化后可能会引入错误。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> t1,t2 <span class="keyword">join</span> t3 <span class="keyword">on</span> t1.c1<span class="operator">=</span>t2.c1,t1.c3<span class="operator">=</span>t3,c1 <span class="keyword">where</span> id<span class="operator">&gt;</span><span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<h2 id="同一张表被连接两次"><a href="#同一张表被连接两次" class="headerlink" title="同一张表被连接两次"></a>同一张表被连接两次</h2><ul>
+<li><strong>Item</strong>:JOI.002</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:相同的表在FROM子句中至少出现两次，可以简化为对该表的单次访问。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> tb1.col <span class="keyword">from</span> (tb1, tb2) <span class="keyword">join</span> tb2 <span class="keyword">on</span> tb1.id<span class="operator">=</span>tb.id <span class="keyword">where</span> tb1.id<span class="operator">=</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="OUTER-JOIN失效"><a href="#OUTER-JOIN失效" class="headerlink" title="OUTER JOIN失效"></a>OUTER JOIN失效</h2><ul>
+<li><strong>Item</strong>:JOI.003</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:由于WHERE条件错误使得OUTER JOIN的外部表无数据返回，这会将查询隐式转换为 INNER JOIN 。如：select c from L left join R using(c) where L.a&#x3D;5 and R.b&#x3D;10。这种SQL逻辑上可能存在错误或程序员对OUTER JOIN如何工作存在误解，因为LEFT&#x2F;RIGHT JOIN是LEFT&#x2F;RIGHT OUTER JOIN的缩写。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> t1 <span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> t2 <span class="keyword">using</span>(c1) <span class="keyword">where</span> t1.c2<span class="operator">=</span><span class="number">2</span> <span class="keyword">and</span> t2.c3<span class="operator">=</span><span class="number">4</span></span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用排它JOIN"><a href="#不建议使用排它JOIN" class="headerlink" title="不建议使用排它JOIN"></a>不建议使用排它JOIN</h2><ul>
+<li><strong>Item</strong>:JOI.004</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:只在右侧表为NULL的带WHERE子句的LEFT OUTER JOIN语句，有可能是在WHERE子句中使用错误的列，如：“… FROM l LEFT OUTER JOIN r ON l.l &#x3D; r.r WHERE r.z IS NULL”，这个查询正确的逻辑可能是 WHERE r.r IS NULL。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> t1 <span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> t2 <span class="keyword">on</span> t1.c1<span class="operator">=</span>t2.c1 <span class="keyword">where</span> t2.c2 <span class="keyword">is</span> <span class="keyword">null</span></span><br></pre></td></tr></table></figure>
+<h2 id="减少JOIN的数量"><a href="#减少JOIN的数量" class="headerlink" title="减少JOIN的数量"></a>减少JOIN的数量</h2><ul>
+<li><strong>Item</strong>:JOI.005</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:太多的JOIN是复杂的裹脚布式查询的症状。考虑将复杂查询分解成许多简单的查询，并减少JOIN的数量。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> bp1.p_id, b1.d_d <span class="keyword">as</span> l, b1.b_id <span class="keyword">from</span> b1 <span class="keyword">join</span> bp1 <span class="keyword">on</span> (b1.b_id <span class="operator">=</span> bp1.b_id) <span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> (b1 <span class="keyword">as</span> b2 <span class="keyword">join</span> bp2 <span class="keyword">on</span> (b2.b_id <span class="operator">=</span> bp2.b_id)) <span class="keyword">on</span> (bp1.p_id <span class="operator">=</span> bp2.p_id ) <span class="keyword">join</span> bp21 <span class="keyword">on</span> (b1.b_id <span class="operator">=</span> bp1.b_id) <span class="keyword">join</span> bp31 <span class="keyword">on</span> (b1.b_id <span class="operator">=</span> bp1.b_id) <span class="keyword">join</span> bp41 <span class="keyword">on</span> (b1.b_id <span class="operator">=</span> bp1.b_id) <span class="keyword">where</span> b2.b_id <span class="operator">=</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="将嵌套查询重写为JOIN通常会导致更高效的执行和更有效的优化"><a href="#将嵌套查询重写为JOIN通常会导致更高效的执行和更有效的优化" class="headerlink" title="将嵌套查询重写为JOIN通常会导致更高效的执行和更有效的优化"></a>将嵌套查询重写为JOIN通常会导致更高效的执行和更有效的优化</h2><ul>
+<li><strong>Item</strong>:JOI.006</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:一般来说，非嵌套子查询总是用于关联子查询，最多是来自FROM子句中的一个表，这些子查询用于ANY、ALL和EXISTS的谓词。如果可以根据查询语义决定子查询最多返回一个行，那么一个不相关的子查询或来自FROM子句中的多个表的子查询就被压平了。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s,p,d <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> p.p_id <span class="operator">=</span> (<span class="keyword">SELECT</span> s.p_id <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> s.c_id <span class="operator">=</span> <span class="number">100996</span> <span class="keyword">AND</span> s.q <span class="operator">=</span> <span class="number">1</span> )</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用联表更新"><a href="#不建议使用联表更新" class="headerlink" title="不建议使用联表更新"></a>不建议使用联表更新</h2><ul>
+<li><strong>Item</strong>:JOI.007</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:当需要同时更新多张表时建议使用简单SQL，一条SQL只更新一张表，尽量不要将多张表的更新在同一条SQL中完成。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> users u <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> hobby h <span class="keyword">ON</span> u.id <span class="operator">=</span> h.uid <span class="keyword">SET</span> u.name <span class="operator">=</span> <span class="string">&#x27;pianoboy&#x27;</span> <span class="keyword">WHERE</span> h.hobby <span class="operator">=</span> <span class="string">&#x27;piano&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="不要使用跨DB的Join查询"><a href="#不要使用跨DB的Join查询" class="headerlink" title="不要使用跨DB的Join查询"></a>不要使用跨DB的Join查询</h2><ul>
+<li><strong>Item</strong>:JOI.008</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:一般来说，跨DB的Join查询意味着查询语句跨越了两个不同的子系统，这可能意味着系统耦合度过高或库表结构设计不合理。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s,p,d <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> p.p_id <span class="operator">=</span> (<span class="keyword">SELECT</span> s.p_id <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> s.c_id <span class="operator">=</span> <span class="number">100996</span> <span class="keyword">AND</span> s.q <span class="operator">=</span> <span class="number">1</span> )</span><br></pre></td></tr></table></figure>
+<h2 id="建议使用自增列作为主键，如使用联合自增主键时请将自增键作为第一列"><a href="#建议使用自增列作为主键，如使用联合自增主键时请将自增键作为第一列" class="headerlink" title="建议使用自增列作为主键，如使用联合自增主键时请将自增键作为第一列"></a>建议使用自增列作为主键，如使用联合自增主键时请将自增键作为第一列</h2><ul>
+<li><strong>Item</strong>:KEY.001</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:建议使用自增列作为主键，如使用联合自增主键时请将自增键作为第一列</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test(`id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY (`id`))</span><br></pre></td></tr></table></figure>
+<h2 id="无主键或唯一键，无法在线变更表结构"><a href="#无主键或唯一键，无法在线变更表结构" class="headerlink" title="无主键或唯一键，无法在线变更表结构"></a>无主键或唯一键，无法在线变更表结构</h2><ul>
+<li><strong>Item</strong>:KEY.002</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:无主键或唯一键，无法在线变更表结构</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test(col <span class="type">varchar</span>(<span class="number">5000</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="避免外键等递归关系"><a href="#避免外键等递归关系" class="headerlink" title="避免外键等递归关系"></a>避免外键等递归关系</h2><ul>
+<li><strong>Item</strong>:KEY.003</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:存在递归关系的数据很常见，数据常会像树或者以层级方式组织。然而，创建一个外键约束来强制执行同一表中两列之间的关系，会导致笨拙的查询。树的每一层对应着另一个连接。您将需要发出递归查询，以获得节点的所有后代或所有祖先。解决方案是构造一个附加的闭包表。它记录了树中所有节点间的关系，而不仅仅是那些具有直接的父子关系。您也可以比较不同层次的数据设计：闭包表，路径枚举，嵌套集。然后根据应用程序的需要选择一个。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tab2 (p_id  <span class="type">BIGINT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span>,a_id  <span class="type">BIGINT</span> UNSIGNED <span class="keyword">NOT</span> <span class="keyword">NULL</span>,<span class="keyword">PRIMARY</span> KEY (p_id, a_id),<span class="keyword">FOREIGN</span> KEY (p_id) <span class="keyword">REFERENCES</span> tab1(p_id),<span class="keyword">FOREIGN</span> KEY (a_id) <span class="keyword">REFERENCES</span> tab3(a_id))</span><br></pre></td></tr></table></figure>
+<h2 id="提醒：请将索引属性顺序与查询对齐"><a href="#提醒：请将索引属性顺序与查询对齐" class="headerlink" title="提醒：请将索引属性顺序与查询对齐"></a>提醒：请将索引属性顺序与查询对齐</h2><ul>
+<li><strong>Item</strong>:KEY.004</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:如果为列创建复合索引，请确保查询属性与索引属性的顺序相同，以便DBMS在处理查询时使用索引。如果查询和索引属性订单没有对齐，那么DBMS可能无法在查询处理期间使用索引。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> index idx1 <span class="keyword">on</span> tbl (last_name,first_name)</span><br></pre></td></tr></table></figure>
+<h2 id="表建的索引过多"><a href="#表建的索引过多" class="headerlink" title="表建的索引过多"></a>表建的索引过多</h2><ul>
+<li><strong>Item</strong>:KEY.005</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:表建的索引过多</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl ( a <span class="type">int</span>, b <span class="type">int</span>, c <span class="type">int</span>, KEY idx_a (`a`),KEY idx_b(`b`),KEY idx_c(`c`));</span><br></pre></td></tr></table></figure>
+<h2 id="主键中的列过多"><a href="#主键中的列过多" class="headerlink" title="主键中的列过多"></a>主键中的列过多</h2><ul>
+<li><strong>Item</strong>:KEY.006</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:主键中的列过多</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl ( a <span class="type">int</span>, b <span class="type">int</span>, c <span class="type">int</span>, <span class="keyword">PRIMARY</span> KEY(`a`,`b`,`c`));</span><br></pre></td></tr></table></figure>
+<h2 id="未指定主键或主键非int或bigint"><a href="#未指定主键或主键非int或bigint" class="headerlink" title="未指定主键或主键非int或bigint"></a>未指定主键或主键非int或bigint</h2><ul>
+<li><strong>Item</strong>:KEY.007</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:未指定主键或主键非int或bigint，建议将主键设置为int unsigned或bigint unsigned。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl (a <span class="type">int</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="ORDER-BY多个列但排序方向不同时可能无法使用索引"><a href="#ORDER-BY多个列但排序方向不同时可能无法使用索引" class="headerlink" title="ORDER BY多个列但排序方向不同时可能无法使用索引"></a>ORDER BY多个列但排序方向不同时可能无法使用索引</h2><ul>
+<li><strong>Item</strong>:KEY.008</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:在MySQL 8.0之前当ORDER BY多个列指定的排序方向不同时将无法使用已经建立的索引。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> tbl <span class="keyword">ORDER</span> <span class="keyword">BY</span> a <span class="keyword">DESC</span>, b <span class="keyword">ASC</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="添加唯一索引前请注意检查数据唯一性"><a href="#添加唯一索引前请注意检查数据唯一性" class="headerlink" title="添加唯一索引前请注意检查数据唯一性"></a>添加唯一索引前请注意检查数据唯一性</h2><ul>
+<li><strong>Item</strong>:KEY.009</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:请提前检查添加唯一索引列的数据唯一性，如果数据不唯一在线表结构调整时将有可能自动将重复列删除，这有可能导致数据丢失。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> INDEX part_of_name <span class="keyword">ON</span> customer (name(<span class="number">10</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="SQL-CALC-FOUND-ROWS效率低下"><a href="#SQL-CALC-FOUND-ROWS效率低下" class="headerlink" title="SQL_CALC_FOUND_ROWS效率低下"></a>SQL_CALC_FOUND_ROWS效率低下</h2><ul>
+<li><strong>Item</strong>:KWR.001</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:因为SQL_CALC_FOUND_ROWS不能很好地扩展，所以可能导致性能问题; 建议业务使用其他策略来替代SQL_CALC_FOUND_ROWS提供的计数功能，比如：分页结果展示等。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> SQL_CALC_FOUND_ROWS col <span class="keyword">from</span> tbl <span class="keyword">where</span> id<span class="operator">&gt;</span><span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用MySQL关键字做列名或表名"><a href="#不建议使用MySQL关键字做列名或表名" class="headerlink" title="不建议使用MySQL关键字做列名或表名"></a>不建议使用MySQL关键字做列名或表名</h2><ul>
+<li><strong>Item</strong>:KWR.002</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:当使用关键字做为列名或表名时程序需要对列名和表名进行转义，如果疏忽被将导致请求无法执行。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl ( `<span class="keyword">select</span>` <span class="type">int</span> )</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用复数做列名或表名"><a href="#不建议使用复数做列名或表名" class="headerlink" title="不建议使用复数做列名或表名"></a>不建议使用复数做列名或表名</h2><ul>
+<li><strong>Item</strong>:KWR.003</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:表名应该仅仅表示表里面的实体内容，不应该表示实体数量，对应于 DO 类名也是单数形式，符合表达习惯。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl ( `books` <span class="type">int</span> )</span><br></pre></td></tr></table></figure>
+<h2 id="INSERT-INTO-xx-SELECT加锁粒度较大请谨慎"><a href="#INSERT-INTO-xx-SELECT加锁粒度较大请谨慎" class="headerlink" title="INSERT INTO xx SELECT加锁粒度较大请谨慎"></a>INSERT INTO xx SELECT加锁粒度较大请谨慎</h2><ul>
+<li><strong>Item</strong>:LCK.001</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:INSERT INTO xx SELECT加锁粒度较大请谨慎</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tbl <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> tbl2;</span><br></pre></td></tr></table></figure>
+<h2 id="请慎用INSERT-ON-DUPLICATE-KEY-UPDATE"><a href="#请慎用INSERT-ON-DUPLICATE-KEY-UPDATE" class="headerlink" title="请慎用INSERT ON DUPLICATE KEY UPDATE"></a>请慎用INSERT ON DUPLICATE KEY UPDATE</h2><ul>
+<li><strong>Item</strong>:LCK.002</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:当主键为自增键时使用INSERT ON DUPLICATE KEY UPDATE可能会导致主键出现大量不连续快速增长，导致主键快速溢出无法继续写入。极端情况下还有可能导致主从数据不一致。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1(a,b,c) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) <span class="keyword">ON</span> DUPLICATE KEY <span class="keyword">UPDATE</span> c<span class="operator">=</span>c<span class="operator">+</span><span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="用字符类型存储IP地址"><a href="#用字符类型存储IP地址" class="headerlink" title="用字符类型存储IP地址"></a>用字符类型存储IP地址</h2><ul>
+<li><strong>Item</strong>:LIT.001</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:字符串字面上看起来像IP地址，但不是INET_ATON()的参数，表示数据被存储为字符而不是整数。将IP地址存储为整数更为有效。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tbl (IP,name) <span class="keyword">values</span>(<span class="string">&#x27;10.20.306.122&#x27;</span>,<span class="string">&#x27;test&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="日期-时间未使用引号括起"><a href="#日期-时间未使用引号括起" class="headerlink" title="日期&#x2F;时间未使用引号括起"></a>日期&#x2F;时间未使用引号括起</h2><ul>
+<li><strong>Item</strong>:LIT.002</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:诸如“WHERE col &lt;2010-02-12”之类的查询是有效的SQL，但可能是一个错误，因为它将被解释为“WHERE col &lt;1996”; 日期&#x2F;时间文字应该加引号。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col1,col2 <span class="keyword">from</span> tbl <span class="keyword">where</span> <span class="type">time</span> <span class="operator">&lt;</span> <span class="number">2018</span><span class="number">-01</span><span class="number">-10</span></span><br></pre></td></tr></table></figure>
+<h2 id="一列中存储一系列相关数据的集合"><a href="#一列中存储一系列相关数据的集合" class="headerlink" title="一列中存储一系列相关数据的集合"></a>一列中存储一系列相关数据的集合</h2><ul>
+<li><strong>Item</strong>:LIT.003</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:将ID存储为一个列表，作为VARCHAR&#x2F;TEXT列，这样能导致性能和数据完整性问题。查询这样的列需要使用模式匹配的表达式。使用逗号分隔的列表来做多表联结查询定位一行数据是极不优雅和耗时的。这将使验证ID更加困难。考虑一下，列表最多支持存放多少数据呢？将ID存储在一张单独的表中，代替使用多值属性，从而每个单独的属性值都可以占据一行。这样交叉表实现了两张表之间的多对多关系。这将更好地简化查询，也更有效地验证ID。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3,c4 <span class="keyword">from</span> tab1 <span class="keyword">where</span> col_id REGEXP <span class="string">&#x27;[[:&lt;:]]12[[:&gt;:]]&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="请使用分号或已设定的DELIMITER结尾"><a href="#请使用分号或已设定的DELIMITER结尾" class="headerlink" title="请使用分号或已设定的DELIMITER结尾"></a>请使用分号或已设定的DELIMITER结尾</h2><ul>
+<li><strong>Item</strong>:LIT.004</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:USE database, SHOW DATABASES等命令也需要使用使用分号或已设定的DELIMITER结尾。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE db</span><br></pre></td></tr></table></figure>
+<h2 id="非确定性的GROUP-BY"><a href="#非确定性的GROUP-BY" class="headerlink" title="非确定性的GROUP BY"></a>非确定性的GROUP BY</h2><ul>
+<li><strong>Item</strong>:RES.001</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:SQL返回的列既不在聚合函数中也不是GROUP BY表达式的列中，因此这些值的结果将是非确定性的。如：select a, b, c from tbl where foo&#x3D;”bar” group by a，该SQL返回的结果就是不确定的。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> c1,c2,c3 <span class="keyword">from</span> t1 <span class="keyword">where</span> c2<span class="operator">=</span><span class="string">&#x27;foo&#x27;</span> <span class="keyword">group</span> <span class="keyword">by</span> c2</span><br></pre></td></tr></table></figure>
+<h2 id="未使用ORDER-BY的LIMIT查询"><a href="#未使用ORDER-BY的LIMIT查询" class="headerlink" title="未使用ORDER BY的LIMIT查询"></a>未使用ORDER BY的LIMIT查询</h2><ul>
+<li><strong>Item</strong>:RES.002</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:没有ORDER BY的LIMIT会导致非确定性的结果，这取决于查询执行计划。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col1,col2 <span class="keyword">from</span> tbl <span class="keyword">where</span> name<span class="operator">=</span>xx limit <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h2 id="UPDATE-DELETE操作使用了LIMIT条件"><a href="#UPDATE-DELETE操作使用了LIMIT条件" class="headerlink" title="UPDATE&#x2F;DELETE操作使用了LIMIT条件"></a>UPDATE&#x2F;DELETE操作使用了LIMIT条件</h2><ul>
+<li><strong>Item</strong>:RES.003</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:UPDATE&#x2F;DELETE操作使用LIMIT条件和不添加WHERE条件一样危险，它可将会导致主从数据不一致或从库同步中断。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> film <span class="keyword">SET</span> length <span class="operator">=</span> <span class="number">120</span> <span class="keyword">WHERE</span> title <span class="operator">=</span> <span class="string">&#x27;abc&#x27;</span> LIMIT <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="UPDATE-DELETE操作指定了ORDER-BY条件"><a href="#UPDATE-DELETE操作指定了ORDER-BY条件" class="headerlink" title="UPDATE&#x2F;DELETE操作指定了ORDER BY条件"></a>UPDATE&#x2F;DELETE操作指定了ORDER BY条件</h2><ul>
+<li><strong>Item</strong>:RES.004</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:UPDATE&#x2F;DELETE操作不要指定ORDER BY条件。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> film <span class="keyword">SET</span> length <span class="operator">=</span> <span class="number">120</span> <span class="keyword">WHERE</span> title <span class="operator">=</span> <span class="string">&#x27;abc&#x27;</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> title</span><br></pre></td></tr></table></figure>
+<h2 id="UPDATE可能存在逻辑错误，导致数据损坏"><a href="#UPDATE可能存在逻辑错误，导致数据损坏" class="headerlink" title="UPDATE可能存在逻辑错误，导致数据损坏"></a>UPDATE可能存在逻辑错误，导致数据损坏</h2><ul>
+<li><strong>Item</strong>:RES.005</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> tbl <span class="keyword">set</span> col <span class="operator">=</span> <span class="number">1</span> <span class="keyword">and</span> cl <span class="operator">=</span> <span class="number">2</span> <span class="keyword">where</span> col<span class="operator">=</span><span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="永远不真的比较条件"><a href="#永远不真的比较条件" class="headerlink" title="永远不真的比较条件"></a>永远不真的比较条件</h2><ul>
+<li><strong>Item</strong>:RES.006</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:查询条件永远非真，这将导致查询无匹配到的结果。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tbl <span class="keyword">where</span> <span class="number">1</span> <span class="operator">!=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="永远为真的比较条件"><a href="#永远为真的比较条件" class="headerlink" title="永远为真的比较条件"></a>永远为真的比较条件</h2><ul>
+<li><strong>Item</strong>:RES.007</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:查询条件永远为真，这将导致WHERE条件失效进行全表查询。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tbl <span class="keyword">where</span> <span class="number">1</span> <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用LOAD-DATA-SELECT-…-INTO-OUTFILE"><a href="#不建议使用LOAD-DATA-SELECT-…-INTO-OUTFILE" class="headerlink" title="不建议使用LOAD DATA&#x2F;SELECT … INTO OUTFILE"></a>不建议使用LOAD DATA&#x2F;SELECT … INTO OUTFILE</h2><ul>
+<li><strong>Item</strong>:RES.008</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:SELECT INTO OUTFILE需要授予FILE权限，这通过会引入安全问题。LOAD DATA虽然可以提高数据导入速度，但同时也可能导致从库同步延迟过大。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LOAD DATA INFILE <span class="string">&#x27;data.txt&#x27;</span> <span class="keyword">INTO</span> <span class="keyword">TABLE</span> db2.my_table;</span><br></pre></td></tr></table></figure>
+<h2 id="请谨慎使用TRUNCATE操作"><a href="#请谨慎使用TRUNCATE操作" class="headerlink" title="请谨慎使用TRUNCATE操作"></a>请谨慎使用TRUNCATE操作</h2><ul>
+<li><strong>Item</strong>:SEC.001</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:一般来说想清空一张表最快速的做法就是使用TRUNCATE TABLE tbl_name;语句。但TRUNCATE操作也并非是毫无代价的，TRUNCATE TABLE无法返回被删除的准确行数，如果需要返回被删除的行数建议使用DELETE语法。TRUNCATE操作还会重置AUTO_INCREMENT，如果不想重置该值建议使用DELETE FROM tbl_name WHERE 1;替代。TRUNCATE操作会对数据字典添加源数据锁(MDL)，当一次需要TRUNCATE很多表时会影响整个实例的所有请求，因此如果要TRUNCATE多个表建议用DROP+CREATE的方式以减少锁时长。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">TRUNCATE</span> <span class="keyword">TABLE</span> tbl_name</span><br></pre></td></tr></table></figure>
+<h2 id="不使用明文存储密码"><a href="#不使用明文存储密码" class="headerlink" title="不使用明文存储密码"></a>不使用明文存储密码</h2><ul>
+<li><strong>Item</strong>:SEC.002</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:使用明文存储密码或者使用明文在网络上传递密码都是不安全的。如果攻击者能够截获您用来插入密码的SQL语句，他们就能直接读到密码。另外，将用户输入的字符串以明文的形式插入到纯SQL语句中，也会让攻击者发现它。如果您能够读取密码，黑客也可以。解决方案是使用单向哈希函数对原始密码进行加密编码。哈希是指将输入字符串转化成另一个新的、不可识别的字符串的函数。对密码加密表达式加点随机串来防御“字典攻击”。不要将明文密码输入到SQL查询语句中。在应用程序代码中计算哈希串，只在SQL查询中使用哈希串。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test(id <span class="type">int</span>,name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,password <span class="type">varchar</span>(<span class="number">200</span>)<span class="keyword">not</span> <span class="keyword">null</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="使用DELETE-DROP-TRUNCATE等操作时注意备份"><a href="#使用DELETE-DROP-TRUNCATE等操作时注意备份" class="headerlink" title="使用DELETE&#x2F;DROP&#x2F;TRUNCATE等操作时注意备份"></a>使用DELETE&#x2F;DROP&#x2F;TRUNCATE等操作时注意备份</h2><ul>
+<li><strong>Item</strong>:SEC.003</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:在执行高危操作之前对数据进行备份是十分有必要的。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> col <span class="operator">=</span> <span class="string">&#x27;condition&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="‘-’-运算符是非标准的"><a href="#‘-’-运算符是非标准的" class="headerlink" title="‘!&#x3D;’ 运算符是非标准的"></a>‘!&#x3D;’ 运算符是非标准的</h2><ul>
+<li><strong>Item</strong>:STA.001</li>
+<li><strong>Severity</strong>:L0</li>
+<li><strong>Content</strong>:”&lt;&gt;”才是标准SQL中的不等于运算符。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col1,col2 <span class="keyword">from</span> tbl <span class="keyword">where</span> type<span class="operator">!=</span><span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="库名或表名点后建议不要加空格"><a href="#库名或表名点后建议不要加空格" class="headerlink" title="库名或表名点后建议不要加空格"></a>库名或表名点后建议不要加空格</h2><ul>
+<li><strong>Item</strong>:STA.002</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:当使用db.table或table.column格式访问表或字段时，请不要在点号后面添加空格，虽然这样语法正确。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col <span class="keyword">from</span> sakila. film</span><br></pre></td></tr></table></figure>
+<h2 id="索引起名不规范"><a href="#索引起名不规范" class="headerlink" title="索引起名不规范"></a>索引起名不规范</h2><ul>
+<li><strong>Item</strong>:STA.003</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:建议普通二级索引以idx_为前缀，唯一索引以uk_为前缀。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col <span class="keyword">from</span> now <span class="keyword">where</span> type<span class="operator">!=</span><span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="起名时请不要使用字母、数字和下划线之外的字符"><a href="#起名时请不要使用字母、数字和下划线之外的字符" class="headerlink" title="起名时请不要使用字母、数字和下划线之外的字符"></a>起名时请不要使用字母、数字和下划线之外的字符</h2><ul>
+<li><strong>Item</strong>:STA.004</li>
+<li><strong>Severity</strong>:L1</li>
+<li><strong>Content</strong>:以字母或下划线开头，名字只允许使用字母、数字和下划线。请统一大小写，不要使用驼峰命名法。不要在名字中出现连续下划线’__‘，这样很难辨认。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> ` abc` (a <span class="type">int</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="MySQL对子查询的优化效果不佳"><a href="#MySQL对子查询的优化效果不佳" class="headerlink" title="MySQL对子查询的优化效果不佳"></a>MySQL对子查询的优化效果不佳</h2><ul>
+<li><strong>Item</strong>:SUB.001</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:MySQL将外部查询中的每一行作为依赖子查询执行子查询。 这是导致严重性能问题的常见原因。这可能会在 MySQL 5.6版本中得到改善, 但对于5.1及更早版本, 建议将该类查询分别重写为JOIN或LEFT OUTER JOIN。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col1,col2,col3 <span class="keyword">from</span> table1 <span class="keyword">where</span> col2 <span class="keyword">in</span>(<span class="keyword">select</span> col <span class="keyword">from</span> table2)</span><br></pre></td></tr></table></figure>
+<h2 id="如果您不在乎重复的话，建议使用UNION-ALL替代UNION"><a href="#如果您不在乎重复的话，建议使用UNION-ALL替代UNION" class="headerlink" title="如果您不在乎重复的话，建议使用UNION ALL替代UNION"></a>如果您不在乎重复的话，建议使用UNION ALL替代UNION</h2><ul>
+<li><strong>Item</strong>:SUB.002</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:与去除重复的UNION不同，UNION ALL允许重复元组。如果您不关心重复元组，那么使用UNION ALL将是一个更快的选项。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> teacher_id <span class="keyword">as</span> id,people_name <span class="keyword">as</span> name <span class="keyword">from</span> t1,t2 <span class="keyword">where</span> t1.teacher_id<span class="operator">=</span>t2.people_id <span class="keyword">union</span> <span class="keyword">select</span> student_id <span class="keyword">as</span> id,people_name <span class="keyword">as</span> name <span class="keyword">from</span> t1,t2 <span class="keyword">where</span> t1.student_id<span class="operator">=</span>t2.people_id</span><br></pre></td></tr></table></figure>
+<h2 id="考虑使用EXISTS而不是DISTINCT子查询"><a href="#考虑使用EXISTS而不是DISTINCT子查询" class="headerlink" title="考虑使用EXISTS而不是DISTINCT子查询"></a>考虑使用EXISTS而不是DISTINCT子查询</h2><ul>
+<li><strong>Item</strong>:SUB.003</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:DISTINCT关键字在对元组排序后删除重复。相反，考虑使用一个带有EXISTS关键字的子查询，您可以避免返回整个表。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> c.c_id, c.c_name <span class="keyword">FROM</span> c,e <span class="keyword">WHERE</span> e.c_id <span class="operator">=</span> c.c_id</span><br></pre></td></tr></table></figure>
+<h2 id="执行计划中嵌套连接深度过深"><a href="#执行计划中嵌套连接深度过深" class="headerlink" title="执行计划中嵌套连接深度过深"></a>执行计划中嵌套连接深度过深</h2><ul>
+<li><strong>Item</strong>:SUB.004</li>
+<li><strong>Severity</strong>:L3</li>
+<li><strong>Content</strong>:MySQL对子查询的优化效果不佳,MySQL将外部查询中的每一行作为依赖子查询执行子查询。 这是导致严重性能问题的常见原因。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> tb <span class="keyword">where</span> id <span class="keyword">in</span> (<span class="keyword">select</span> id <span class="keyword">from</span> (<span class="keyword">select</span> id <span class="keyword">from</span> tb))</span><br></pre></td></tr></table></figure>
+<h2 id="子查询不支持LIMIT"><a href="#子查询不支持LIMIT" class="headerlink" title="子查询不支持LIMIT"></a>子查询不支持LIMIT</h2><ul>
+<li><strong>Item</strong>:SUB.005</li>
+<li><strong>Severity</strong>:L8</li>
+<li><strong>Content</strong>:当前MySQL版本不支持在子查询中进行’LIMIT &amp; IN&#x2F;ALL&#x2F;ANY&#x2F;SOME’。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> staff <span class="keyword">WHERE</span> name <span class="keyword">IN</span> (<span class="keyword">SELECT</span> NAME <span class="keyword">FROM</span> customer <span class="keyword">ORDER</span> <span class="keyword">BY</span> name LIMIT <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="不建议在子查询中使用函数"><a href="#不建议在子查询中使用函数" class="headerlink" title="不建议在子查询中使用函数"></a>不建议在子查询中使用函数</h2><ul>
+<li><strong>Item</strong>:SUB.006</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:MySQL将外部查询中的每一行作为依赖子查询执行子查询，如果在子查询中使用函数，即使是semi-join也很难进行高效的查询。可以将子查询重写为OUTER JOIN语句并用连接条件对数据进行过滤。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> staff <span class="keyword">WHERE</span> name <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="built_in">max</span>(NAME) <span class="keyword">FROM</span> customer)</span><br></pre></td></tr></table></figure>
+<h2 id="不建议使用分区表"><a href="#不建议使用分区表" class="headerlink" title="不建议使用分区表"></a>不建议使用分区表</h2><ul>
+<li><strong>Item</strong>:TBL.001</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:不建议使用分区表</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> trb3(id <span class="type">INT</span>, name <span class="type">VARCHAR</span>(<span class="number">50</span>), purchased <span class="type">DATE</span>) <span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">RANGE</span>(<span class="keyword">YEAR</span>(purchased)) (<span class="keyword">PARTITION</span> p0 <span class="keyword">VALUES</span> LESS THAN (<span class="number">1990</span>), <span class="keyword">PARTITION</span> p1 <span class="keyword">VALUES</span> LESS THAN (<span class="number">1995</span>), <span class="keyword">PARTITION</span> p2 <span class="keyword">VALUES</span> LESS THAN (<span class="number">2000</span>), <span class="keyword">PARTITION</span> p3 <span class="keyword">VALUES</span> LESS THAN (<span class="number">2005</span>) );</span><br></pre></td></tr></table></figure>
+<h2 id="请为表选择合适的存储引擎"><a href="#请为表选择合适的存储引擎" class="headerlink" title="请为表选择合适的存储引擎"></a>请为表选择合适的存储引擎</h2><ul>
+<li><strong>Item</strong>:TBL.002</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:建表或修改表的存储引擎时建议使用推荐的存储引擎，如：innodb</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test(`id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT)</span><br></pre></td></tr></table></figure>
+<h2 id="以DUAL命名的表在数据库中有特殊含义"><a href="#以DUAL命名的表在数据库中有特殊含义" class="headerlink" title="以DUAL命名的表在数据库中有特殊含义"></a>以DUAL命名的表在数据库中有特殊含义</h2><ul>
+<li><strong>Item</strong>:TBL.003</li>
+<li><strong>Severity</strong>:L8</li>
+<li><strong>Content</strong>:DUAL表为虚拟表，不需要创建即可使用，也不建议服务以DUAL命名表。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dual(id <span class="type">int</span>, <span class="keyword">primary</span> key (id));</span><br></pre></td></tr></table></figure>
+<h2 id="表的初始AUTO-INCREMENT值不为0"><a href="#表的初始AUTO-INCREMENT值不为0" class="headerlink" title="表的初始AUTO_INCREMENT值不为0"></a>表的初始AUTO_INCREMENT值不为0</h2><ul>
+<li><strong>Item</strong>:TBL.004</li>
+<li><strong>Severity</strong>:L2</li>
+<li><strong>Content</strong>:AUTO_INCREMENT不为0会导致数据空洞。</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl (a <span class="type">int</span>) AUTO_INCREMENT <span class="operator">=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="请使用推荐的字符集"><a href="#请使用推荐的字符集" class="headerlink" title="请使用推荐的字符集"></a>请使用推荐的字符集</h2><ul>
+<li><strong>Item</strong>:TBL.005</li>
+<li><strong>Severity</strong>:L4</li>
+<li><strong>Content</strong>:表字符集只允许设置为utf8,utf8mb4</li>
+<li><strong>Case</strong>:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tbl (a <span class="type">int</span>) <span class="keyword">DEFAULT</span> CHARSET <span class="operator">=</span> latin1;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2018/10/25/%E5%B0%8F%E7%B1%B3soar%E5%90%AF%E5%8F%91%E5%BC%8F%E8%A7%84%E5%88%99%E5%BB%BA%E8%AE%AE/" data-id="clpgmy4ub004ao1vh2prva5u3" data-title="小米soar启发式规则建议" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/soar-mysql/" rel="tag">soar mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/12/nginx%E4%BB%8Egzip%E6%8D%A2%E6%88%90brotli/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          nginx从gzip换成brotli
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/12/nginx%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E5%92%8C%E6%97%A5%E5%BF%97%E5%8F%AF%E8%A7%86%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">nginx日志切割和日志可视化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Clash-Chrome/" rel="tag">Clash Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deployer-php/" rel="tag">Deployer php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graylog/" rel="tag">Graylog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Laravel-ORM/" rel="tag">Laravel ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Laravel-TrimStrings/" rel="tag">Laravel TrimStrings</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-expect/" rel="tag">Linux expect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/" rel="tag">Mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Opcache/" rel="tag">Opcache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phan/" rel="tag">Phan</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/" rel="tag">Ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby%E6%A0%87%E7%AD%BE/" rel="tag">Ruby标签</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/" rel="tag">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-yilia/" rel="tag">hexo yilia</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-php-job/" rel="tag">laravel php job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/" rel="tag">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maatwebsite/" rel="tag">maatwebsite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongo/" rel="tag">mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-gzip-brotli/" rel="tag">nginx gzip brotli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-logrotate-goaccess/" rel="tag">nginx logrotate goaccess</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" rel="tag">nginx 反向代理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oss-%E9%98%BF%E9%87%8C%E4%BA%91/" rel="tag">oss 阿里云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-EasyWeChat/" rel="tag">php EasyWeChat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-Larvel-Job/" rel="tag">php Larvel Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-MongoDB/" rel="tag">php MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/phpspy/" rel="tag">phpspy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/satis-composer-webhook/" rel="tag">satis composer webhook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/soar-mysql/" rel="tag">soar mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%83%E7%89%9B/" rel="tag">七牛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F-vue-mpvue-php-%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7/" rel="tag">小程序 vue mpvue php 杭州摇号</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Clash-Chrome/" style="font-size: 10px;">Clash Chrome</a> <a href="/tags/Deployer-php/" style="font-size: 13.33px;">Deployer php</a> <a href="/tags/Graylog/" style="font-size: 10px;">Graylog</a> <a href="/tags/Laravel-ORM/" style="font-size: 10px;">Laravel ORM</a> <a href="/tags/Laravel-TrimStrings/" style="font-size: 10px;">Laravel TrimStrings</a> <a href="/tags/Linux-expect/" style="font-size: 10px;">Linux expect</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Opcache/" style="font-size: 10px;">Opcache</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Phan/" style="font-size: 10px;">Phan</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Ruby%E6%A0%87%E7%AD%BE/" style="font-size: 10px;">Ruby标签</a> <a href="/tags/Sublime/" style="font-size: 10px;">Sublime</a> <a href="/tags/git/" style="font-size: 13.33px;">git</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/hexo-yilia/" style="font-size: 10px;">hexo yilia</a> <a href="/tags/java/" style="font-size: 13.33px;">java</a> <a href="/tags/laravel/" style="font-size: 10px;">laravel</a> <a href="/tags/laravel-php-job/" style="font-size: 10px;">laravel php job</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/maatwebsite/" style="font-size: 10px;">maatwebsite</a> <a href="/tags/mongo/" style="font-size: 10px;">mongo</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/nginx-gzip-brotli/" style="font-size: 10px;">nginx gzip brotli</a> <a href="/tags/nginx-logrotate-goaccess/" style="font-size: 10px;">nginx logrotate goaccess</a> <a href="/tags/nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 10px;">nginx 反向代理</a> <a href="/tags/oss-%E9%98%BF%E9%87%8C%E4%BA%91/" style="font-size: 10px;">oss 阿里云</a> <a href="/tags/php/" style="font-size: 16.67px;">php</a> <a href="/tags/php-EasyWeChat/" style="font-size: 10px;">php EasyWeChat</a> <a href="/tags/php-Larvel-Job/" style="font-size: 10px;">php Larvel Job</a> <a href="/tags/php-MongoDB/" style="font-size: 10px;">php MongoDB</a> <a href="/tags/php-fpm/" style="font-size: 10px;">php-fpm</a> <a href="/tags/phpspy/" style="font-size: 10px;">phpspy</a> <a href="/tags/satis-composer-webhook/" style="font-size: 10px;">satis composer webhook</a> <a href="/tags/soar-mysql/" style="font-size: 10px;">soar mysql</a> <a href="/tags/%E4%B8%83%E7%89%9B/" style="font-size: 10px;">七牛</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F-vue-mpvue-php-%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7/" style="font-size: 10px;">小程序 vue mpvue php 杭州摇号</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/04/CentOS%E5%AE%89%E8%A3%85Ruby/">CentOS安装Ruby</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/02/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%87%8D%E5%A4%8D%E8%AF%B7%E6%B1%82%E9%97%AE%E9%A2%98/">nginx反向代理重复请求问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/17/Method%20__PHP_Incomplete_Class--handle()%20does%20not%20exist/">laravel job报错</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/">curl提示Connection refused问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/">Mac Clash Chrome无痕模式可以，正常模式不行的问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 sgq<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

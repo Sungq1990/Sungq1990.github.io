@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>尐海的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="尐海的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="尐海的博客">
+<meta property="og:url" content="https://sgq.github.io/page/3/index.html">
+<meta property="og:site_name" content="尐海的博客">
+<meta property="og:description" content="尐海的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="sgq">
+<meta property="article:tag" content="php,mysql,docker,nginx,redis.linux">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="尐海的博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">尐海的博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS 订阅"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="搜索"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://sgq.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Mybatis大坑" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/05/16/Mybatis%E5%A4%A7%E5%9D%91/" class="article-date">
+  <time class="dt-published" datetime="2019-05-16T02:20:14.000Z" itemprop="datePublished">2019-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/05/16/Mybatis%E5%A4%A7%E5%9D%91/">Mybatis大坑</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert后返回数据库自增id</span><br></pre></td></tr></table></figure>
+
+<h4 id="正确的写法"><a href="#正确的写法" class="headerlink" title="正确的写法"></a>正确的写法</h4><p>dao层(重点就是不能加@Param注释)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer addUser(MpUsers user);</span><br></pre></td></tr></table></figure>
+<p>xml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=&quot;addUser&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;id&quot;  parameterType=&quot;com.sgq.user.entity.MpUsers&quot;&gt;</span><br><span class="line">    INSERT INTO mp_users (openid,platform,created_at,updated_at) values (#&#123;openid&#125;,#&#123;platform&#125;,#&#123;created_at&#125;,#&#123;updated_at&#125;)</span><br><span class="line">&lt;/insert&gt;</span><br></pre></td></tr></table></figure>
+<p>业务层获取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MpUsers user = new MpUsers();</span><br><span class="line">Integer id = user.getId();</span><br></pre></td></tr></table></figure>
+
+<h4 id="坑总结"><a href="#坑总结" class="headerlink" title="坑总结"></a>坑总结</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、dao层不能传参数，要传Bean</span><br><span class="line">2、dao层不能使用@Param注释</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/05/16/Mybatis%E5%A4%A7%E5%9D%91/" data-id="clpgmy4td000po1vhc5cv4msp" data-title="Mybatis大坑" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mybatis/" rel="tag">Mybatis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Linux expect" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/05/09/Linux%20expect/" class="article-date">
+  <time class="dt-published" datetime="2019-05-09T02:20:14.000Z" itemprop="datePublished">2019-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/05/09/Linux%20expect/">Linux expect</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>expect是一个免费的编程工具，用来实现自动的交互式任务，而无需人为干预。在实际工作中，我们运行命令、脚本或程序时，这些命令、脚本或程序都需要从终端输入某些继续运行的指令，而这些输入都需要人为的手工进行。而利用expect，则可以根据程序的提示，模拟标准输入提供给程序，从而实现自动化交互执行</p>
+<h4 id="expect基本只需要记住4个命令"><a href="#expect基本只需要记住4个命令" class="headerlink" title="expect基本只需要记住4个命令"></a>expect基本只需要记住4个命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>send</td>
+<td>用于向进程发送字符串</td>
+</tr>
+<tr>
+<td>expect</td>
+<td>从进程接收字符串</td>
+</tr>
+<tr>
+<td>spawn</td>
+<td>启动新的进程</td>
+</tr>
+<tr>
+<td>interact</td>
+<td>允许用户交互</td>
+</tr>
+</tbody></table>
+<h4 id="一个简单的Demo"><a href="#一个简单的Demo" class="headerlink" title="一个简单的Demo"></a>一个简单的Demo</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/tcl/bin/expect</span><br><span class="line"></span><br><span class="line">set timeout 30</span><br><span class="line">set host &quot;101.200.241.109&quot;</span><br><span class="line">set username &quot;root&quot;</span><br><span class="line">set password &quot;123456&quot;</span><br><span class="line"></span><br><span class="line">spawn ssh $username@$host</span><br><span class="line">expect &quot;*password*&quot; &#123;send &quot;$password\r&quot;&#125;</span><br><span class="line">interact</span><br></pre></td></tr></table></figure>
+<p>其它还有模式-动作和传参等功能，具体可以问搜索引擎</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/05/09/Linux%20expect/" data-id="clpgmy4ta000fo1vh0mi2fekg" data-title="Linux expect" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux-expect/" rel="tag">Linux expect</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-php火焰图" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/05/07/php%E7%81%AB%E7%84%B0%E5%9B%BE/" class="article-date">
+  <time class="dt-published" datetime="2019-05-07T06:46:14.000Z" itemprop="datePublished">2019-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/05/07/php%E7%81%AB%E7%84%B0%E5%9B%BE/">php火焰图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>早就想用火焰图来分析程序的瓶颈了，但是找了一圈并没有发现好用的php火焰图工具，最近发现了github上一个项目，可以生成火焰图，项目地址<a target="_blank" rel="noopener" href="https://github.com/adsr/phpspy">phpspy</a>，目前只能在Linux系统下使用，Mac和Windows都不支持</p>
+<h5 id="我的环境"><a href="#我的环境" class="headerlink" title="我的环境"></a>我的环境</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PHP 7.2.14</span><br><span class="line">CentOS Linux release 7.6.1810 (Core)</span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>由于我使用的是php-fpm，所以需要监听php-fpm的进程来采集信息，命令行如下，其中-V72就是php版本，–time-limit-ms是采样时间，结束后就可以在tmp文件夹下看到svg文件，把svg文件拖进Chrome就可以看到火焰图了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pgrep php-fpm | xargs -P0 -I&#123;&#125; bash -c &#x27;./phpspy -p &#123;&#125; -V72 --time-limit-ms 6000000 | ./stackcollapse-phpspy.pl | ./vendor/flamegraph.pl &gt; ./tmp/phpspy-flamegraph.&#123;&#125;.svg&#x27;</span><br></pre></td></tr></table></figure>
+<p>效果如下<br><img src="https://i.loli.net/2019/05/07/5cd13e5114593.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/05/07/php%E7%81%AB%E7%84%B0%E5%9B%BE/" data-id="clpgmy4tu0026o1vh1nw0hyk0" data-title="php火焰图" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/phpspy/" rel="tag">phpspy</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java学习日记(二)--微服务" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/15/java%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0(%E4%BA%8C)--%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="article-date">
+  <time class="dt-published" datetime="2019-04-15T09:28:00.000Z" itemprop="datePublished">2019-04-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/15/java%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0(%E4%BA%8C)--%E5%BE%AE%E6%9C%8D%E5%8A%A1/">java学习日记(二)--微服务</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>我们直接上项目，不在弄什么java语法啊、spring boot入门啊这些，这些东西网上都可以找到，大部分人搭个环境写个CURD也没什么难度。这里用的是之前公司java技术线的基础框架，spring boot、dubbo、jsonRpc等实现的微服务<br>具体项目见<a target="_blank" rel="noopener" href="https://github.com/Sungq1990/user-service">github</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/04/15/java%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0(%E4%BA%8C)--%E5%BE%AE%E6%9C%8D%E5%8A%A1/" data-id="clpgmy4tl001eo1vha3tbc2qa" data-title="java学习日记(二)--微服务" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java学习日记(一)--环境搭建" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/04/09/java%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0(%E4%B8%80)--%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time class="dt-published" datetime="2019-04-09T14:28:54.000Z" itemprop="datePublished">2019-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/04/09/java%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0(%E4%B8%80)--%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">java学习日记(一)--环境搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">jdk使用1.8，下载地址</span><br><span class="line">https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</span><br><span class="line"></span><br><span class="line">环境变量设置(改成自己的安装路径)</span><br><span class="line">vi ~/.bash_profile</span><br><span class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line"></span><br><span class="line">查看是否生效</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h4 id="zookeeper安装-版本3-4-13"><a href="#zookeeper安装-版本3-4-13" class="headerlink" title="zookeeper安装(版本3.4.13)"></a>zookeeper安装(版本3.4.13)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">下载地址</span><br><span class="line">http://www-eu.apache.org/dist/zookeeper/zookeeper-3.4.13/</span><br><span class="line"></span><br><span class="line">配置(改成自己的安装路径)</span><br><span class="line">将con文件夹下的zoo_sample.cfg拷贝一份,重命名为zoo.cfg，修改为</span><br><span class="line">dataDir= /Users/sgq/data/java/zookeeper-3.4.13/data</span><br><span class="line">dataLogDir= /Users/sgq/data/java/zookeeper-3.4.13/logs</span><br><span class="line">clientPort=2181</span><br><span class="line"></span><br><span class="line">启动</span><br><span class="line">bin目录下./zkServer.sh</span><br><span class="line">其中./zkCli.sh查看运行状态</span><br></pre></td></tr></table></figure>
+
+<h4 id="dubbokeeper安装"><a href="#dubbokeeper安装" class="headerlink" title="dubbokeeper安装"></a>dubbokeeper安装</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">下载源码</span><br><span class="line">git clone https://github.com/dubboclub/dubbokeeper.git</span><br><span class="line"></span><br><span class="line">用mysql存储,mysql新增一个database dubbo-monitor</span><br><span class="line">初始化数据库</span><br><span class="line">CREATE TABLE `application` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(100) NOT NULL DEFAULT &#x27;&#x27;,</span><br><span class="line">  `type` varchar(50) NOT NULL DEFAULT &#x27;&#x27;,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  UNIQUE KEY `应用名词索引` (`name`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line">执行根目录下的</span><br><span class="line">install-mysql.sh</span><br><span class="line"></span><br><span class="line">在target目录下 监控数据存储和收集</span><br><span class="line">dubbokeeper/target/</span><br><span class="line">/mysql-server/conf 修改这里面的配置</span><br><span class="line">配置监控的zookeeper注册中心</span><br><span class="line">dubbo.application.name=mysql-monitor</span><br><span class="line">dubbo.application.owner=bieber</span><br><span class="line">dubbo.registry.address=zookeeper://127.0.0.1:2181</span><br><span class="line">dubbo.protocol.name=dubbo</span><br><span class="line">dubbo.protocol.port=20884</span><br><span class="line"></span><br><span class="line">monitor.collect.interval=10000</span><br><span class="line">#use netty4</span><br><span class="line">dubbo.provider.transporter=netty4</span><br><span class="line">monitor.write.interval=60</span><br><span class="line">#mysql配置 如果是远程的localhost改为mysql所做主机mysql 端口根据需要修改。后面的是你创建用来存储监控的数据库名</span><br><span class="line">dubbo.monitor.mysql.url=jdbc:mysql://localhost:3306/dubbo-monitor</span><br><span class="line">dubbo.monitor.mysql.username=root</span><br><span class="line">dubbo.monitor.mysql.password=123456</span><br><span class="line">dubbo.monitor.mysql.pool.max=10</span><br><span class="line">dubbo.monitor.mysql.pool.min=10</span><br><span class="line"></span><br><span class="line">启动监控进程</span><br><span class="line">mysql-dubbokeeper-server bin目录下./start-mysql.sh</span><br><span class="line"></span><br><span class="line">管理和UI展示</span><br><span class="line">把target下mysql-dubbokeeper-ui下的war包移到tomcat webapp目录下，重启tomcat，在webapp下发现多了个文件夹dubbokeeper-ui-1.0.1修改dubbokeeper-ui-1.0.1/WEB-INF/classes下的dubbo.propertie</span><br><span class="line"></span><br><span class="line">设置zookeeper注册中心 此处需要和上面设置的mysql-monitor一样</span><br><span class="line">dubbo.application.name=common-monitor</span><br><span class="line">dubbo.application.owner=bieber</span><br><span class="line">dubbo.registry.address=zookeeper://127.0.0.1:2181</span><br><span class="line"></span><br><span class="line">#use netty4</span><br><span class="line">dubbo.reference.client=netty4</span><br><span class="line"></span><br><span class="line">#peeper config  此处可以配置多个zookeeper注册中心可以透视zookeeper服务</span><br><span class="line">peeper.zookeepers=101.89.137.26:2181,101.89.177.224:2181,180.153.53.160:2181,192.168.15.203:2181</span><br><span class="line">peeper.zookeeper.session.timeout=60000</span><br><span class="line"></span><br><span class="line">#logger 日志文件</span><br><span class="line">monitor.log.home=/monitor-log</span><br><span class="line"></span><br><span class="line">monitor.collect.interval=6000</span><br><span class="line"></span><br><span class="line">重新配置以后，删除掉war包。重启tomcat服务即可访问</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/04/09/java%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0(%E4%B8%80)--%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-id="clpgmy4tk001co1vh6uym2yac" data-title="java学习日记(一)--环境搭建" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-php Phan代码静态扫描" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/" class="article-date">
+  <time class="dt-published" datetime="2019-03-25T06:01:14.000Z" itemprop="datePublished">2019-03-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/">php Phan代码静态扫描</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Phan是一个PHP的静态分析器,它会查找常见问题，并在类型信息可用或可以推断时验证各种操作的类型兼容性</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/" data-id="clpgmy4ts001wo1vhh33z7u3y" data-title="php Phan代码静态扫描" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phan/" rel="tag">Phan</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-七牛两个账户之间的数据迁移" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/03/18/%E4%B8%83%E7%89%9B%E4%B8%A4%E4%B8%AA%E8%B4%A6%E6%88%B7%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" class="article-date">
+  <time class="dt-published" datetime="2019-03-18T02:46:14.000Z" itemprop="datePublished">2019-03-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/03/18/%E4%B8%83%E7%89%9B%E4%B8%A4%E4%B8%AA%E8%B4%A6%E6%88%B7%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/">七牛两个账户之间的数据迁移</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>先去<a target="_blank" rel="noopener" href="http://developer.qiniu.com/resource/official.html">七牛官网</a>下载对应的迁移工具<br>①先将A账户下的资源下载到本地</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/qshell-darwin-x64 qdownload 10 qdist_down.conf</span><br></pre></td></tr></table></figure>
+<p>qdist_down.conf内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;dest_dir&quot; : &quot;下载路径&quot;,</span><br><span class="line"> &quot;bucket&quot; : &quot;空间名称&quot;,</span><br><span class="line"> &quot;domain&quot; : &quot;http://xxx.z0.glb.clouddn.com/&quot;,</span><br><span class="line"> &quot;access_key&quot; : &quot;ak&quot;,</span><br><span class="line"> &quot;secret_key&quot; : &quot;sk&quot;,</span><br><span class="line"> &quot;is_private&quot; : false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>①上传资源到B账户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/qshell-darwin-x64 qupload 10 qupload.conf</span><br></pre></td></tr></table></figure>
+<p>qupload.conf内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;src_dir&quot;: &quot;本地资源路径&quot;,</span><br><span class="line">  &quot;bucket&quot;: &quot;空间名称&quot;,</span><br><span class="line">  &quot;access_key&quot;: &quot;七牛ak&quot;,</span><br><span class="line">  &quot;secret_key&quot;: &quot;七牛sk&quot;,</span><br><span class="line">  &quot;ignore_dir&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/03/18/%E4%B8%83%E7%89%9B%E4%B8%A4%E4%B8%AA%E8%B4%A6%E6%88%B7%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" data-id="clpgmy4tx002go1vh0gyh2rdo" data-title="七牛两个账户之间的数据迁移" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%83%E7%89%9B/" rel="tag">七牛</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-MYSQL规约" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/02/25/MYSQL%E8%A7%84%E7%BA%A6/" class="article-date">
+  <time class="dt-published" datetime="2019-02-25T09:19:14.000Z" itemprop="datePublished">2019-02-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/02/25/MYSQL%E8%A7%84%E7%BA%A6/">MYSQL规约</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>MYSQL规约</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/02/25/MYSQL%E8%A7%84%E7%BA%A6/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2019/02/25/MYSQL%E8%A7%84%E7%BA%A6/" data-id="clpgmy4tb000ho1vhesaz5871" data-title="MYSQL规约" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-记录一下杭州摇号管家的开发经过" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/11/26/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7%E7%AE%A1%E5%AE%B6%E7%9A%84%E5%BC%80%E5%8F%91%E7%BB%8F%E8%BF%87/" class="article-date">
+  <time class="dt-published" datetime="2018-11-26T09:19:14.000Z" itemprop="datePublished">2018-11-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/11/26/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7%E7%AE%A1%E5%AE%B6%E7%9A%84%E5%BC%80%E5%8F%91%E7%BB%8F%E8%BF%87/">记录一下杭州摇号管家的开发经过</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>看了下第一次提交，是在2018年5月5号，到现在差不多6个月半年了，做这个的原因主要是上了腾讯云的车，想着一年多一点服务器就挂个博客太浪费了，就想着折腾个小程序，先看下大体的技术线<br><img src="https://i.loli.net/2019/04/29/5cc6b786c5296.jpg"></p>
+        
+          <p class="article-more-link">
+            <a href="/2018/11/26/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7%E7%AE%A1%E5%AE%B6%E7%9A%84%E5%BC%80%E5%8F%91%E7%BB%8F%E8%BF%87/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2018/11/26/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7%E7%AE%A1%E5%AE%B6%E7%9A%84%E5%BC%80%E5%8F%91%E7%BB%8F%E8%BF%87/" data-id="clpgmy4ty002mo1vhalr10xm8" data-title="记录一下杭州摇号管家的开发经过" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F-vue-mpvue-php-%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7/" rel="tag">小程序 vue mpvue php 杭州摇号</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-nginx从gzip换成brotli" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/11/12/nginx%E4%BB%8Egzip%E6%8D%A2%E6%88%90brotli/" class="article-date">
+  <time class="dt-published" datetime="2018-11-12T09:39:14.000Z" itemprop="datePublished">2018-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/11/12/nginx%E4%BB%8Egzip%E6%8D%A2%E6%88%90brotli/">nginx从gzip换成brotli</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>原来nginx一直用的是gzip,偶然听说brotli可以让网站速度更快，就换成了brotli,brotli要求nginx版本在1.9以上，我服务器上的nginx版本是1.7,折腾了一会儿直接升级到1.14了</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/11/12/nginx%E4%BB%8Egzip%E6%8D%A2%E6%88%90brotli/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sgq.github.io/2018/11/12/nginx%E4%BB%8Egzip%E6%8D%A2%E6%88%90brotli/" data-id="clpgmy4tq001oo1vh8xrvczlz" data-title="nginx从gzip换成brotli" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx-gzip-brotli/" rel="tag">nginx gzip brotli</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Clash-Chrome/" rel="tag">Clash Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Deployer-php/" rel="tag">Deployer php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Graylog/" rel="tag">Graylog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Laravel-ORM/" rel="tag">Laravel ORM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Laravel-TrimStrings/" rel="tag">Laravel TrimStrings</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-expect/" rel="tag">Linux expect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mybatis/" rel="tag">Mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Opcache/" rel="tag">Opcache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phan/" rel="tag">Phan</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/" rel="tag">Ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby%E6%A0%87%E7%AD%BE/" rel="tag">Ruby标签</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sublime/" rel="tag">Sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-yilia/" rel="tag">hexo yilia</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel/" rel="tag">laravel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/laravel-php-job/" rel="tag">laravel php job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/" rel="tag">life</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maatwebsite/" rel="tag">maatwebsite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongo/" rel="tag">mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-gzip-brotli/" rel="tag">nginx gzip brotli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-logrotate-goaccess/" rel="tag">nginx logrotate goaccess</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" rel="tag">nginx 反向代理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oss-%E9%98%BF%E9%87%8C%E4%BA%91/" rel="tag">oss 阿里云</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php/" rel="tag">php</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-EasyWeChat/" rel="tag">php EasyWeChat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-Larvel-Job/" rel="tag">php Larvel Job</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-MongoDB/" rel="tag">php MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/php-fpm/" rel="tag">php-fpm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/phpspy/" rel="tag">phpspy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/satis-composer-webhook/" rel="tag">satis composer webhook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/soar-mysql/" rel="tag">soar mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%83%E7%89%9B/" rel="tag">七牛</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F-vue-mpvue-php-%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7/" rel="tag">小程序 vue mpvue php 杭州摇号</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Clash-Chrome/" style="font-size: 10px;">Clash Chrome</a> <a href="/tags/Deployer-php/" style="font-size: 13.33px;">Deployer php</a> <a href="/tags/Graylog/" style="font-size: 10px;">Graylog</a> <a href="/tags/Laravel-ORM/" style="font-size: 10px;">Laravel ORM</a> <a href="/tags/Laravel-TrimStrings/" style="font-size: 10px;">Laravel TrimStrings</a> <a href="/tags/Linux-expect/" style="font-size: 10px;">Linux expect</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Opcache/" style="font-size: 10px;">Opcache</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Phan/" style="font-size: 10px;">Phan</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Ruby%E6%A0%87%E7%AD%BE/" style="font-size: 10px;">Ruby标签</a> <a href="/tags/Sublime/" style="font-size: 10px;">Sublime</a> <a href="/tags/git/" style="font-size: 13.33px;">git</a> <a href="/tags/golang/" style="font-size: 10px;">golang</a> <a href="/tags/hexo-yilia/" style="font-size: 10px;">hexo yilia</a> <a href="/tags/java/" style="font-size: 13.33px;">java</a> <a href="/tags/laravel/" style="font-size: 10px;">laravel</a> <a href="/tags/laravel-php-job/" style="font-size: 10px;">laravel php job</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/maatwebsite/" style="font-size: 10px;">maatwebsite</a> <a href="/tags/mongo/" style="font-size: 10px;">mongo</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/nginx-gzip-brotli/" style="font-size: 10px;">nginx gzip brotli</a> <a href="/tags/nginx-logrotate-goaccess/" style="font-size: 10px;">nginx logrotate goaccess</a> <a href="/tags/nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 10px;">nginx 反向代理</a> <a href="/tags/oss-%E9%98%BF%E9%87%8C%E4%BA%91/" style="font-size: 10px;">oss 阿里云</a> <a href="/tags/php/" style="font-size: 16.67px;">php</a> <a href="/tags/php-EasyWeChat/" style="font-size: 10px;">php EasyWeChat</a> <a href="/tags/php-Larvel-Job/" style="font-size: 10px;">php Larvel Job</a> <a href="/tags/php-MongoDB/" style="font-size: 10px;">php MongoDB</a> <a href="/tags/php-fpm/" style="font-size: 10px;">php-fpm</a> <a href="/tags/phpspy/" style="font-size: 10px;">phpspy</a> <a href="/tags/satis-composer-webhook/" style="font-size: 10px;">satis composer webhook</a> <a href="/tags/soar-mysql/" style="font-size: 10px;">soar mysql</a> <a href="/tags/%E4%B8%83%E7%89%9B/" style="font-size: 10px;">七牛</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F-vue-mpvue-php-%E6%9D%AD%E5%B7%9E%E6%91%87%E5%8F%B7/" style="font-size: 10px;">小程序 vue mpvue php 杭州摇号</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/01/04/CentOS%E5%AE%89%E8%A3%85Ruby/">CentOS安装Ruby</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/02/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%87%8D%E5%A4%8D%E8%AF%B7%E6%B1%82%E9%97%AE%E9%A2%98/">nginx反向代理重复请求问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/17/Method%20__PHP_Incomplete_Class--handle()%20does%20not%20exist/">laravel job报错</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/">curl提示Connection refused问题</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/">Mac Clash Chrome无痕模式可以，正常模式不行的问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 sgq<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
