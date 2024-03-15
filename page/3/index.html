@@ -133,6 +133,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-php冷门知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/18/php%E5%86%B7%E9%97%A8%E7%9F%A5%E8%AF%86/">php冷门知识</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/18/php%E5%86%B7%E9%97%A8%E7%9F%A5%E8%AF%86/" class="archive-article-date">
+  	<time datetime="2020-06-18T12:06:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>在响应用户请求后继续运行php脚本</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ignore_user_abort(true);</span><br><span class="line">set_time_limit(0);</span><br><span class="line"></span><br><span class="line">ob_start();</span><br><span class="line">// do initial processing here</span><br><span class="line">echo $response; // send the response</span><br><span class="line">header(&#x27;Connection: close&#x27;);</span><br><span class="line">header(&#x27;Content-Length: &#x27;.ob_get_length());</span><br><span class="line">ob_end_flush();</span><br><span class="line">ob_flush();</span><br><span class="line">flush();</span><br><span class="line"></span><br><span class="line">// now the request is sent to the browser, but the script is still running</span><br><span class="line">// so, you can continue...</span><br><span class="line"></span><br><span class="line">上面的是Apache服务器的写法，如果是php-fpm的话可以用fastcgi_finish_request</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/18/php%E5%86%B7%E9%97%A8%E7%9F%A5%E8%AF%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-git rebase操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -868,88 +944,6 @@
 
 
   
-    <article id="post-七牛两个账户之间的数据迁移" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/18/%E4%B8%83%E7%89%9B%E4%B8%A4%E4%B8%AA%E8%B4%A6%E6%88%B7%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/">七牛两个账户之间的数据迁移</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/18/%E4%B8%83%E7%89%9B%E4%B8%A4%E4%B8%AA%E8%B4%A6%E6%88%B7%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" class="archive-article-date">
-  	<time datetime="2019-03-18T02:46:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>先去<a target="_blank" rel="noopener" href="http://developer.qiniu.com/resource/official.html">七牛官网</a>下载对应的迁移工具<br>①先将A账户下的资源下载到本地</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/qshell-darwin-x64 qdownload 10 qdist_down.conf</span><br></pre></td></tr></table></figure>
-<p>qdist_down.conf内容如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;dest_dir&quot; : &quot;下载路径&quot;,</span><br><span class="line"> &quot;bucket&quot; : &quot;空间名称&quot;,</span><br><span class="line"> &quot;domain&quot; : &quot;http://xxx.z0.glb.clouddn.com/&quot;,</span><br><span class="line"> &quot;access_key&quot; : &quot;ak&quot;,</span><br><span class="line"> &quot;secret_key&quot; : &quot;sk&quot;,</span><br><span class="line"> &quot;is_private&quot; : false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>①上传资源到B账户</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/qshell-darwin-x64 qupload 10 qupload.conf</span><br></pre></td></tr></table></figure>
-<p>qupload.conf内容如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;src_dir&quot;: &quot;本地资源路径&quot;,</span><br><span class="line">  &quot;bucket&quot;: &quot;空间名称&quot;,</span><br><span class="line">  &quot;access_key&quot;: &quot;七牛ak&quot;,</span><br><span class="line">  &quot;secret_key&quot;: &quot;七牛sk&quot;,</span><br><span class="line">  &quot;ignore_dir&quot;: true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">七牛</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/18/%E4%B8%83%E7%89%9B%E4%B8%A4%E4%B8%AA%E8%B4%A6%E6%88%B7%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1067,6 +1061,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Laravel</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Laravel TrimStrings</a>
               </li>
              
@@ -1107,11 +1105,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
+                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
+                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1195,11 +1193,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">oss 阿里云</a>
+                <a href="javascript:void(0)" class="js-tag color3">小程序 vue mpvue php 杭州摇号</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">小程序 vue mpvue php 杭州摇号</a>
+                <a href="javascript:void(0)" class="js-tag color3">oss 阿里云</a>
               </li>
              
               <li class="article-tag-list-item">

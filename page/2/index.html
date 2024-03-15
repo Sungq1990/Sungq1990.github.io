@@ -133,6 +133,79 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Laravel的TrimStrings中间件会把请求数据的首尾空格去掉" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/11/Laravel%E7%9A%84TrimStrings%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BC%9A%E6%8A%8A%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A6%96%E5%B0%BE%E7%A9%BA%E6%A0%BC%E5%8E%BB%E6%8E%89/">Laravel的TrimStrings中间件会把请求数据的首尾空格去掉</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/11/Laravel%E7%9A%84TrimStrings%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BC%9A%E6%8A%8A%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A6%96%E5%B0%BE%E7%A9%BA%E6%A0%BC%E5%8E%BB%E6%8E%89/" class="archive-article-date">
+  	<time datetime="2021-10-11T09:18:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">今天业务方反馈一个运行很久了的接口报签名错误，经过定位发现是post提交的</span><br><span class="line">参数中某个字段尾部有个空格，业务方在生成签名的时候是带上空格的，到我这边</span><br><span class="line">的时候发现没有空格了，经过搜索引擎的帮助发现是Larave的TrimStrings中</span><br><span class="line">间件造成的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">两种解决办法：</span><br><span class="line">一种是业务方对数据进行处理去掉首尾空格；</span><br><span class="line">二是注释掉TrimStrings这个中间件</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Laravel TrimStrings</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/11/Laravel%E7%9A%84TrimStrings%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BC%9A%E6%8A%8A%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A6%96%E5%B0%BE%E7%A9%BA%E6%A0%BC%E5%8E%BB%E6%8E%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Html5 Ruby标签" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -832,82 +905,6 @@
 
 
   
-    <article id="post-php冷门知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/18/php%E5%86%B7%E9%97%A8%E7%9F%A5%E8%AF%86/">php冷门知识</a>
-    </h1>
-  
-
-        
-        <a href="/2020/06/18/php%E5%86%B7%E9%97%A8%E7%9F%A5%E8%AF%86/" class="archive-article-date">
-  	<time datetime="2020-06-18T12:06:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>在响应用户请求后继续运行php脚本</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ignore_user_abort(true);</span><br><span class="line">set_time_limit(0);</span><br><span class="line"></span><br><span class="line">ob_start();</span><br><span class="line">// do initial processing here</span><br><span class="line">echo $response; // send the response</span><br><span class="line">header(&#x27;Connection: close&#x27;);</span><br><span class="line">header(&#x27;Content-Length: &#x27;.ob_get_length());</span><br><span class="line">ob_end_flush();</span><br><span class="line">ob_flush();</span><br><span class="line">flush();</span><br><span class="line"></span><br><span class="line">// now the request is sent to the browser, but the script is still running</span><br><span class="line">// so, you can continue...</span><br><span class="line"></span><br><span class="line">上面的是Apache服务器的写法，如果是php-fpm的话可以用fastcgi_finish_request</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/18/php%E5%86%B7%E9%97%A8%E7%9F%A5%E8%AF%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1025,6 +1022,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Laravel</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Laravel TrimStrings</a>
               </li>
              
@@ -1065,11 +1066,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
+                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
+                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1153,11 +1154,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">oss 阿里云</a>
+                <a href="javascript:void(0)" class="js-tag color3">小程序 vue mpvue php 杭州摇号</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">小程序 vue mpvue php 杭州摇号</a>
+                <a href="javascript:void(0)" class="js-tag color3">oss 阿里云</a>
               </li>
              
               <li class="article-tag-list-item">

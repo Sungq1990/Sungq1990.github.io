@@ -133,6 +133,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Laravel logging.php的days参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/03/15/Laravel%20logging.php%E7%9A%84days%E5%8F%82%E6%95%B0/">Laravel logging.php的days参数</a>
+    </h1>
+  
+
+        
+        <a href="/2024/03/15/Laravel%20logging.php%E7%9A%84days%E5%8F%82%E6%95%B0/" class="archive-article-date">
+  	<time datetime="2024-03-15T05:47:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>laravel项目设置了日志按日分隔，然后days参数设置了30，但是过了一阵子去看30前的日志还在没被删除，<br>然后各种排查，最后发现被days这个配置的命名误导了，虽然叫days，但是实际上是max的意思。<br>直白的说配了这个看的不是日期，然后最多保留这个数量的日志文件。</p>
+<p>具体可以看下面的代码实习</p>
+<p>LogManager.php</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">protected function createDailyDriver(array $config)</span><br><span class="line">&#123;</span><br><span class="line">    return new Monolog($this-&gt;parseChannel($config), [</span><br><span class="line">        $this-&gt;prepareHandler(new RotatingFileHandler(</span><br><span class="line">            $config[&#x27;path&#x27;], $config[&#x27;days&#x27;] ?? 7, $this-&gt;level($config),</span><br><span class="line">            $config[&#x27;bubble&#x27;] ?? true, $config[&#x27;permission&#x27;] ?? null, $config[&#x27;locking&#x27;] ?? false</span><br><span class="line">        ), $config),</span><br><span class="line">    ]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>RotatingFileHandler.php</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">public function __construct(string $filename, int $maxFiles = 0, $level = Logger::DEBUG, bool $bubble = true, ?int $filePermission = null, bool $useLocking = false)</span><br><span class="line">&#123;</span><br><span class="line">    $this-&gt;filename = Utils::canonicalizePath($filename);</span><br><span class="line">    $this-&gt;maxFiles = $maxFiles;</span><br><span class="line">    $this-&gt;nextRotation = new \DateTimeImmutable(&#x27;tomorrow&#x27;);</span><br><span class="line">    $this-&gt;filenameFormat = &#x27;&#123;filename&#125;-&#123;date&#125;&#x27;;</span><br><span class="line">    $this-&gt;dateFormat = static::FILE_PER_DAY;</span><br><span class="line"></span><br><span class="line">    parent::__construct($this-&gt;getTimedFilename(), $level, $bubble, $filePermission, $useLocking);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">protected function rotate(): void</span><br><span class="line">&#123;</span><br><span class="line">    // update filename</span><br><span class="line">    $this-&gt;url = $this-&gt;getTimedFilename();</span><br><span class="line">    $this-&gt;nextRotation = new \DateTimeImmutable(&#x27;tomorrow&#x27;);</span><br><span class="line"></span><br><span class="line">    // skip GC of old logs if files are unlimited</span><br><span class="line">    if (0 === $this-&gt;maxFiles) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $logFiles = glob($this-&gt;getGlobPattern());</span><br><span class="line">    if (false === $logFiles) &#123;</span><br><span class="line">        // failed to glob</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if ($this-&gt;maxFiles &gt;= count($logFiles)) &#123;</span><br><span class="line">        // no files to remove</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Sorting the files by name to remove the older ones</span><br><span class="line">    usort($logFiles, function ($a, $b) &#123;</span><br><span class="line">        return strcmp($b, $a);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    foreach (array_slice($logFiles, $this-&gt;maxFiles) as $file) &#123;</span><br><span class="line">        if (is_writable($file)) &#123;</span><br><span class="line">            // suppress errors here as unlink() might fail if two processes</span><br><span class="line">            // are cleaning up/rotating at the same time</span><br><span class="line">            set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline): bool &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;);</span><br><span class="line">            unlink($file);</span><br><span class="line">            restore_error_handler();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $this-&gt;mustRotate = false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Laravel</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/03/15/Laravel%20logging.php%E7%9A%84days%E5%8F%82%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Ubuntu 22.04.2 LTS安装带qt的wkhtmltopdf" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -783,13 +863,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#x70;&#x68;&#x70;&#64;&#x37;&#46;&#x32;">&#x70;&#x68;&#x70;&#64;&#x37;&#46;&#x32;</a></p>
+        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#112;&#x68;&#x70;&#64;&#x37;&#46;&#50;">&#112;&#x68;&#x70;&#64;&#x37;&#46;&#50;</a></p>
 <p>可能是之前用brew安装了ffmpeg导致PHP的CLI环境出问题了，在CLI下执行PHP会报</p>
 <p>Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;openldap&#x2F;lib&#x2F;libldap-2.4.2.dylib</p>
 <p>说下解决方法，就是需要brew重装下php才行</p>
-<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#112;&#x68;&#112;&#64;&#x37;&#46;&#50;">&#112;&#x68;&#112;&#64;&#x37;&#46;&#50;</a>会报错</p>
-<p>Error: <a href="mailto:&#112;&#x68;&#112;&#x40;&#x37;&#x2e;&#x32;">&#112;&#x68;&#112;&#x40;&#x37;&#x2e;&#x32;</a> has been disabled because it is deprecated upstream!</p>
-<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#112;&#x68;&#112;&#x40;&#x37;&#x2e;&#50;">&#112;&#x68;&#112;&#x40;&#x37;&#x2e;&#50;</a><br>即可</p>
+<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#x70;&#104;&#112;&#64;&#55;&#x2e;&#x32;">&#x70;&#104;&#112;&#64;&#55;&#x2e;&#x32;</a>会报错</p>
+<p>Error: <a href="mailto:&#x70;&#x68;&#112;&#64;&#x37;&#46;&#50;">&#x70;&#x68;&#112;&#64;&#x37;&#46;&#50;</a> has been disabled because it is deprecated upstream!</p>
+<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#112;&#104;&#112;&#64;&#55;&#x2e;&#50;">&#112;&#104;&#112;&#64;&#55;&#x2e;&#50;</a><br>即可</p>
 <p>安装完成后问题得到解决！</p>
 
       
@@ -815,79 +895,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/12/30/PHP%20Library%20not%20loade%20libldap-2.4.2.dylib%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Laravel的TrimStrings中间件会把请求数据的首尾空格去掉" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/11/Laravel%E7%9A%84TrimStrings%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BC%9A%E6%8A%8A%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A6%96%E5%B0%BE%E7%A9%BA%E6%A0%BC%E5%8E%BB%E6%8E%89/">Laravel的TrimStrings中间件会把请求数据的首尾空格去掉</a>
-    </h1>
-  
-
-        
-        <a href="/2021/10/11/Laravel%E7%9A%84TrimStrings%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BC%9A%E6%8A%8A%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A6%96%E5%B0%BE%E7%A9%BA%E6%A0%BC%E5%8E%BB%E6%8E%89/" class="archive-article-date">
-  	<time datetime="2021-10-11T09:18:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">今天业务方反馈一个运行很久了的接口报签名错误，经过定位发现是post提交的</span><br><span class="line">参数中某个字段尾部有个空格，业务方在生成签名的时候是带上空格的，到我这边</span><br><span class="line">的时候发现没有空格了，经过搜索引擎的帮助发现是Larave的TrimStrings中</span><br><span class="line">间件造成的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">两种解决办法：</span><br><span class="line">一种是业务方对数据进行处理去掉首尾空格；</span><br><span class="line">二是注释掉TrimStrings这个中间件</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Laravel TrimStrings</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/10/11/Laravel%E7%9A%84TrimStrings%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BC%9A%E6%8A%8A%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A6%96%E5%B0%BE%E7%A9%BA%E6%A0%BC%E5%8E%BB%E6%8E%89/">展开全文 >></a>
         </p>
       
 
@@ -1034,6 +1041,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Laravel</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Laravel TrimStrings</a>
               </li>
              
@@ -1074,11 +1085,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
+                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
+                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1162,11 +1173,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">oss 阿里云</a>
+                <a href="javascript:void(0)" class="js-tag color3">小程序 vue mpvue php 杭州摇号</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">小程序 vue mpvue php 杭州摇号</a>
+                <a href="javascript:void(0)" class="js-tag color3">oss 阿里云</a>
               </li>
              
               <li class="article-tag-list-item">
