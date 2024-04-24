@@ -133,6 +133,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Mac下mysql启动不了的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/21/Mac%E4%B8%8Bmysql%E5%90%AF%E5%8A%A8%E4%B8%8D%E4%BA%86%E7%9A%84%E9%97%AE%E9%A2%98/">Mac下mysql启动不了的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/21/Mac%E4%B8%8Bmysql%E5%90%AF%E5%8A%A8%E4%B8%8D%E4%BA%86%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-09-21T06:28:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近估计强制重启了一下电脑，Mac本地的mysql服务挂了，这里记录一下解决方法。</p>
+<p>先说下环境:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Macbook Pro 2013款</span><br><span class="line">brew安装的mysql 版本为5.6</span><br><span class="line">mysql的WorkingDirectory是/usr/local/var/mysql</span><br></pre></td></tr></table></figure>
+
+<p>错误:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">执行sudo mysql.server start报错</span><br><span class="line"></span><br><span class="line">. ERROR! The server quit without updating PID file (/usr/local/var/mysql/sgq.local.pid).</span><br><span class="line"></span><br><span class="line">详细的错误可引去mysql的WorkingDirectory里看，我的是/usr/local/var/mysql/sgq.local.err，里面是启动失败的具体信息</span><br><span class="line"></span><br><span class="line">2020-09-21 06:47:16 16682 [ERROR] Fatal error: Please read &quot;Security&quot; section of the manual to find out how to run mysqld as root!</span><br><span class="line"></span><br><span class="line">2020-09-21 06:47:16 16682 [ERROR] Aborting</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过报错发现是mysql不让通过root启动，最简单的方式就是强制使用root启动，后面追加–user&#x3D;root即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql.server start --user=root</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/21/Mac%E4%B8%8Bmysql%E5%90%AF%E5%8A%A8%E4%B8%8D%E4%BA%86%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-php冷门知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -868,82 +949,6 @@
 
 
   
-    <article id="post-php Phan代码静态扫描" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/">php Phan代码静态扫描</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/" class="archive-article-date">
-  	<time datetime="2019-03-25T06:01:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Phan是一个PHP的静态分析器,它会查找常见问题，并在类型信息可用或可以推断时验证各种操作的类型兼容性</p>
-        
-          <a class="article-more-a" href="/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Phan</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/25/php%20Phan%E4%BB%A3%E7%A0%81%E9%9D%99%E6%80%81%E6%89%AB%E6%8F%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -1105,11 +1110,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
+                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
+                <a href="javascript:void(0)" class="js-tag color1">Ubuntu php</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">WSL2</a>
               </li>
              
               <li class="article-tag-list-item">
