@@ -133,6 +133,83 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-WSL2的服务暴露给局域网里的其它机器访问" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/">WSL2的服务暴露给局域网里的其它机器访问</a>
+    </h1>
+  
+
+        
+        <a href="/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/" class="archive-article-date">
+  	<time datetime="2024-05-08T08:32:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="windows先开放端口"><a href="#windows先开放端口" class="headerlink" title="windows先开放端口"></a>windows先开放端口</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">去防火墙那里配置一个入站规则，开放需要访问的端口</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改wsl配置"><a href="#修改wsl配置" class="headerlink" title="修改wsl配置"></a>修改wsl配置</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">用户目录 %USERPROFILE% 下面创建或修改配置文件 .wslconfig，加入以下内容</span><br><span class="line">[experimental]</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure>
+
+<h4 id="重启wsl"><a href="#重启wsl" class="headerlink" title="重启wsl"></a>重启wsl</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Windows cmd 执行 wsl --shutdown然后重启打开wsl就能访问了</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">WSL2</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Ubuntu单机多版本php切换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -817,83 +894,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mac Clash Chrome无痕模式可以，正常模式不行的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/">Mac Clash Chrome无痕模式可以，正常模式不行的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2022-01-10T06:26:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>现象描述</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安装了Clash，safari可以正常使用，chrome下无痕模式可以，正常模式就不行</span><br></pre></td></tr></table></figure>
-
-<p>解决方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">先chrome安装一个SwitchyOmega插件(可以离线安装，自行搜索方法)</span><br><span class="line">然后在SwitchyOmega下的情景模式中配置代理服务器</span><br><span class="line">代理服务器填127.0.0.1</span><br><span class="line">端口填7890(如果改过Clash的端口，就填修改后的那个)</span><br><span class="line">然后选择proxy模式就可以了</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Clash Chrome</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
         </p>
       
 

@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://sgq.github.io">
-  <title>Archives | 尐海的博客</title>
+  <title>WSL2的服务暴露给局域网里的其它机器访问 | 尐海的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="尐海的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="尐海的博客">
-<meta property="og:url" content="https://sgq.github.io/archives/index.html">
+  <meta name="description" content="windows先开放端口1去防火墙那里配置一个入站规则，开放需要访问的端口  修改wsl配置123456用户目录 %USERPROFILE% 下面创建或修改配置文件 .wslconfig，加入以下内容[experimental]networkingMode&#x3D;mirroreddnsTunneling&#x3D;truefirewall&#x3D;trueautoProxy&#x3D;true  重启wsl1Windows cmd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WSL2的服务暴露给局域网里的其它机器访问">
+<meta property="og:url" content="https://sgq.github.io/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/index.html">
 <meta property="og:site_name" content="尐海的博客">
-<meta property="og:description" content="尐海的博客">
+<meta property="og:description" content="windows先开放端口1去防火墙那里配置一个入站规则，开放需要访问的端口  修改wsl配置123456用户目录 %USERPROFILE% 下面创建或修改配置文件 .wslconfig，加入以下内容[experimental]networkingMode&#x3D;mirroreddnsTunneling&#x3D;truefirewall&#x3D;trueautoProxy&#x3D;true  重启wsl1Windows cmd">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-08T08:32:00.000Z">
+<meta property="article:modified_time" content="2024-05-08T08:38:39.599Z">
 <meta property="article:author" content="sgq">
-<meta property="article:tag" content="php,mysql,docker,nginx,redis.linux">
+<meta property="article:tag" content="WSL2">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="尐海的博客" type="application/atom+xml">
@@ -131,36 +133,38 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-WSL2的服务暴露给局域网里的其它机器访问" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      WSL2的服务暴露给局域网里的其它机器访问
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/" class="archive-article-date">
+
+        
+        <a href="/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/" class="archive-article-date">
   	<time datetime="2024-05-08T08:32:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-05-08</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/">WSL2的服务暴露给局域网里的其它机器访问</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="windows先开放端口"><a href="#windows先开放端口" class="headerlink" title="windows先开放端口"></a>windows先开放端口</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">去防火墙那里配置一个入站规则，开放需要访问的端口</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<h4 id="修改wsl配置"><a href="#修改wsl配置" class="headerlink" title="修改wsl配置"></a>修改wsl配置</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">用户目录 %USERPROFILE% 下面创建或修改配置文件 .wslconfig，加入以下内容</span><br><span class="line">[experimental]</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure>
+
+<h4 id="重启wsl"><a href="#重启wsl" class="headerlink" title="重启wsl"></a>重启wsl</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Windows cmd 执行 wsl --shutdown然后重启打开wsl就能访问了</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -172,384 +176,105 @@
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/04/24/Ubuntu%E5%8D%95%E6%9C%BA%E5%A4%9A%E7%89%88%E6%9C%ACphp%E5%88%87%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2024-04-24T00:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-04-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/04/24/Ubuntu%E5%8D%95%E6%9C%BA%E5%A4%9A%E7%89%88%E6%9C%ACphp%E5%88%87%E6%8D%A2/">Ubuntu单机多版本php切换</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Ubuntu php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/03/15/Laravel%20logging.php%E7%9A%84days%E5%8F%82%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2024-03-15T05:47:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-03-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/03/15/Laravel%20logging.php%E7%9A%84days%E5%8F%82%E6%95%B0/">Laravel logging.php的days参数</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Laravel</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/02/20/Ubuntu%2022.04.2%20LTS%E5%AE%89%E8%A3%85%E5%B8%A6qt%E7%9A%84wkhtmltopdf/" class="archive-article-date">
-  	<time datetime="2024-02-20T05:16:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-02-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/02/20/Ubuntu%2022.04.2%20LTS%E5%AE%89%E8%A3%85%E5%B8%A6qt%E7%9A%84wkhtmltopdf/">Ubuntu 22.04.2 LTS安装带qt的wkhtmltopdf</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">wkhtmltopdf</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/12/26/WSL2%E8%AE%BE%E7%BD%AEroot%E7%94%A8%E6%88%B7%E5%90%AF%E5%8A%A8/" class="archive-article-date">
-  	<time datetime="2023-12-26T06:35:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/12/26/WSL2%E8%AE%BE%E7%BD%AEroot%E7%94%A8%E6%88%B7%E5%90%AF%E5%8A%A8/">WSL2设置root用户启动</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">WSL2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/11/27/win11%E4%B8%8B%E5%AE%89%E8%A3%85docker%E7%8E%AF%E5%A2%83/" class="archive-article-date">
-  	<time datetime="2023-11-27T09:35:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/11/27/win11%E4%B8%8B%E5%AE%89%E8%A3%85docker%E7%8E%AF%E5%A2%83/">win11下安装docker环境</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">win11 docker</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://sgq.github.io/2024/05/08/WSL2%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%B1%80%E5%9F%9F%E7%BD%91%E9%87%8C%E7%9A%84%E5%85%B6%E5%AE%83%E6%9C%BA%E5%99%A8%E8%AE%BF%E9%97%AE/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2023/01/04/CentOS%E5%AE%89%E8%A3%85Ruby/" class="archive-article-date">
-  	<time datetime="2023-01-04T10:45:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-01-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/01/04/CentOS%E5%AE%89%E8%A3%85Ruby/">CentOS安装Ruby</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Ruby</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
+<div class="mask js-mask"></div>
       
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/02/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%87%8D%E5%A4%8D%E8%AF%B7%E6%B1%82%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2022-06-02T09:55:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/06/02/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E9%87%8D%E5%A4%8D%E8%AF%B7%E6%B1%82%E9%97%AE%E9%A2%98/">nginx反向代理重复请求问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nginx 反向代理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/17/Method%20__PHP_Incomplete_Class--handle()%20does%20not%20exist/" class="archive-article-date">
-  	<time datetime="2022-03-17T10:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2024/04/24/Ubuntu%E5%8D%95%E6%9C%BA%E5%A4%9A%E7%89%88%E6%9C%ACphp%E5%88%87%E6%8D%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Ubuntu单机多版本php切换</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/17/Method%20__PHP_Incomplete_Class--handle()%20does%20not%20exist/">laravel job报错</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">laravel php job</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2022-01-24T07:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/">curl提示Connection refused问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Deployer php</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -573,8 +298,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

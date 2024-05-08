@@ -133,6 +133,83 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Mac Clash Chrome无痕模式可以，正常模式不行的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/">Mac Clash Chrome无痕模式可以，正常模式不行的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2022-01-10T06:26:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>现象描述</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">安装了Clash，safari可以正常使用，chrome下无痕模式可以，正常模式就不行</span><br></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">先chrome安装一个SwitchyOmega插件(可以离线安装，自行搜索方法)</span><br><span class="line">然后在SwitchyOmega下的情景模式中配置代理服务器</span><br><span class="line">代理服务器填127.0.0.1</span><br><span class="line">端口填7890(如果改过Clash的端口，就填修改后的那个)</span><br><span class="line">然后选择proxy模式就可以了</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Clash Chrome</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/01/10/Mac%20Clash%20Chrome%E6%97%A0%E7%97%95%E6%A8%A1%E5%BC%8F%E5%8F%AF%E4%BB%A5%EF%BC%8C%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%E4%B8%8D%E8%A1%8C%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-PHP Library not loade libldap-2.4.2.dylib问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -153,13 +230,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#x70;&#104;&#112;&#x40;&#x37;&#46;&#x32;">&#x70;&#104;&#112;&#x40;&#x37;&#46;&#x32;</a></p>
+        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#112;&#x68;&#112;&#64;&#x37;&#x2e;&#x32;">&#112;&#x68;&#112;&#64;&#x37;&#x2e;&#x32;</a></p>
 <p>可能是之前用brew安装了ffmpeg导致PHP的CLI环境出问题了，在CLI下执行PHP会报</p>
 <p>Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;openldap&#x2F;lib&#x2F;libldap-2.4.2.dylib</p>
 <p>说下解决方法，就是需要brew重装下php才行</p>
-<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#x70;&#x68;&#112;&#64;&#55;&#46;&#x32;">&#x70;&#x68;&#112;&#64;&#55;&#46;&#x32;</a>会报错</p>
-<p>Error: <a href="mailto:&#x70;&#x68;&#112;&#64;&#55;&#46;&#x32;">&#x70;&#x68;&#112;&#64;&#55;&#46;&#x32;</a> has been disabled because it is deprecated upstream!</p>
-<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#x70;&#x68;&#112;&#x40;&#x37;&#46;&#x32;">&#x70;&#x68;&#112;&#x40;&#x37;&#46;&#x32;</a><br>即可</p>
+<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#x70;&#104;&#112;&#x40;&#x37;&#46;&#50;">&#x70;&#104;&#112;&#x40;&#x37;&#46;&#50;</a>会报错</p>
+<p>Error: <a href="mailto:&#x70;&#104;&#x70;&#x40;&#55;&#x2e;&#x32;">&#x70;&#104;&#x70;&#x40;&#55;&#x2e;&#x32;</a> has been disabled because it is deprecated upstream!</p>
+<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;">&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;</a><br>即可</p>
 <p>安装完成后问题得到解决！</p>
 
       
@@ -800,82 +877,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/09/29/laravel%20job%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%BC%8F%E4%B8%8B%20%E5%81%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E5%BA%93%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-maatwebsite excel导出多个sheet和sheet重命名" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/25/maatwebsite%20excel%E5%AF%BC%E5%87%BA%E5%A4%9A%E4%B8%AAsheet%E5%92%8Csheet%E9%87%8D%E5%91%BD%E5%90%8D/">maatwebsite excel导出多个sheet和sheet重命名</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/25/maatwebsite%20excel%E5%AF%BC%E5%87%BA%E5%A4%9A%E4%B8%AAsheet%E5%92%8Csheet%E9%87%8D%E5%91%BD%E5%90%8D/" class="archive-article-date">
-  	<time datetime="2020-09-25T06:37:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近工作中需要用到Excel导出，用的是php的laravel框架，导出Excel就用到maatwebsite这个包。包的具体安装方法<br>这里就不具体介绍了哈，可以自行百度之。<br>这次主要说下实际使用过程中越到的2个问题：<br>①一个Excel包含多个sheet<br>②sheet重命名</p>
-        
-          <a class="article-more-a" href="/2020/09/25/maatwebsite%20excel%E5%AF%BC%E5%87%BA%E5%A4%9A%E4%B8%AAsheet%E5%92%8Csheet%E9%87%8D%E5%91%BD%E5%90%8D/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">maatwebsite</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/25/maatwebsite%20excel%E5%AF%BC%E5%87%BA%E5%A4%9A%E4%B8%AAsheet%E5%92%8Csheet%E9%87%8D%E5%91%BD%E5%90%8D/">展开全文 >></a>
         </p>
       
 
