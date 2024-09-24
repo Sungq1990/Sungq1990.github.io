@@ -133,6 +133,84 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-curl提示Connection refused问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/">curl提示Connection refused问题</a>
+    </h1>
+  
+
+        
+        <a href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2022-01-24T07:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>装了clash后发现终端执行curl不行了，会报下面的错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl: (7) Failed to connect to 127.0.0.1 port 1080: Connection refused</span><br></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修改curl的配置文件</span><br><span class="line">配置文件一般位于 ~/.curlrc</span><br><span class="line">发现里面有一行代理配置 socks5 = &quot;127.0.0.1:1080&quot;</span><br><span class="line">注释掉就行</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Deployer php</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/01/24/curl%E6%8F%90%E7%A4%BAConnection%20refused%E9%97%AE%E9%A2%98/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Mac Clash Chrome无痕模式可以，正常模式不行的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -230,13 +308,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#112;&#x68;&#112;&#64;&#x37;&#x2e;&#x32;">&#112;&#x68;&#112;&#64;&#x37;&#x2e;&#x32;</a></p>
+        <p>先说下我的环境，机器是Mac，系统是Monterey 12.0.1，之前用的brew安装的<a href="mailto:&#112;&#x68;&#112;&#x40;&#55;&#46;&#x32;">&#112;&#x68;&#112;&#x40;&#55;&#46;&#x32;</a></p>
 <p>可能是之前用brew安装了ffmpeg导致PHP的CLI环境出问题了，在CLI下执行PHP会报</p>
 <p>Library not loaded: &#x2F;usr&#x2F;local&#x2F;opt&#x2F;openldap&#x2F;lib&#x2F;libldap-2.4.2.dylib</p>
 <p>说下解决方法，就是需要brew重装下php才行</p>
-<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#x70;&#104;&#112;&#x40;&#x37;&#46;&#50;">&#x70;&#104;&#112;&#x40;&#x37;&#46;&#50;</a>会报错</p>
-<p>Error: <a href="mailto:&#x70;&#104;&#x70;&#x40;&#55;&#x2e;&#x32;">&#x70;&#104;&#x70;&#x40;&#55;&#x2e;&#x32;</a> has been disabled because it is deprecated upstream!</p>
-<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;">&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;</a><br>即可</p>
+<p>由于我的brew之前重装过，直接执行brew reinstall <a href="mailto:&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;">&#112;&#104;&#x70;&#64;&#55;&#x2e;&#50;</a>会报错</p>
+<p>Error: <a href="mailto:&#112;&#104;&#112;&#x40;&#55;&#x2e;&#50;">&#112;&#104;&#112;&#x40;&#55;&#x2e;&#50;</a> has been disabled because it is deprecated upstream!</p>
+<p>需要执行下<br>brew tap shivammathur&#x2F;php<br>在执行<br>brew install shivammathur&#x2F;php&#x2F;<a href="mailto:&#112;&#x68;&#112;&#x40;&#55;&#46;&#x32;">&#112;&#x68;&#112;&#x40;&#55;&#46;&#x32;</a><br>即可</p>
 <p>安装完成后问题得到解决！</p>
 
       
@@ -829,83 +907,6 @@
 
 
   
-    <article id="post-laravel job数据库驱动模式下 偶发数据库死锁问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/29/laravel%20job%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%BC%8F%E4%B8%8B%20%E5%81%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E5%BA%93%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/">laravel job数据库驱动模式下 偶发数据库死锁问题</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/29/laravel%20job%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%BC%8F%E4%B8%8B%20%E5%81%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E5%BA%93%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-09-29T08:23:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>两个用到queue的项目线上突然经常偶发性的发送数据库死锁的报警，先说一下背景，<br>laravel版本是5.6，queue用的是数据库驱动，报错信息如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SQLSTATE[40001]: Serialization failure: 1213 Deadlock found when trying to get lock; try restarting transaction (SQL: delete from `jobs` where `id` = 110894)</span><br><span class="line"></span><br><span class="line">Trace:#0 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Database/Connection.php(624): Illuminate\Database\Connection-&gt;runQueryCallback(&#x27;delete from `jo...&#x27;, Array, Object(Closure))</span><br><span class="line">#1 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Database/Connection.php(490): Illuminate\Database\Connection-&gt;run(&#x27;delete from `jo...&#x27;, Array, Object(Closure))</span><br><span class="line">#2 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Database/Connection.php(435): Illuminate\Database\Connection-&gt;affectingStatement(&#x27;delete from `jo...&#x27;, Array)</span><br><span class="line">#3 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(2587): Illuminate\Database\Connection-&gt;delete(&#x27;delete from `jo...&#x27;, Array)</span><br><span class="line">#4 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Queue/DatabaseQueue.php(294): Illuminate\Database\Query\Builder-&gt;delete()</span><br><span class="line">#5 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Database/Concerns/ManagesTransactions.php(29): Illuminate\Queue\DatabaseQueue-&gt;Illuminate\Queue\&#123;closure&#125;(Object(Illuminate\Database\MySqlConnection))</span><br><span class="line">#6 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Queue/DatabaseQueue.php(296): Illuminate\Database\Connection-&gt;transaction(Object(Closure))</span><br><span class="line">#7 /var/www/bifrost/vendor/laravel/framework/src/Illuminate/Queue/Jobs/DatabaseJob.php(68): Illuminate\Queue\DatabaseQueue-&gt;deleteReserved(&#x27;default&#x27;, 110894)</span><br></pre></td></tr></table></figure>
-
-<p>初步怀疑是多线程同时消费造成的(事实上也是)，这里有一点需要注意，laravel用数据库驱动的queue最好只开一个worker，<br>不然有概率出现死锁的问题，如果驱动替换成redis就不会有相关问题，用redis很流畅，建议优先用redis。<br>我这个问题是因为公司的k8s配置有问题，有几个pod就有几个worker，刚好释放pod的脚本出问题了，就出现了多个worker。<br>说这么多重点就是一个，如果queue用的database驱动，最好就开一个worker，这个是文档上没有重点说明的。<br>相关参考资料<br><a target="_blank" rel="noopener" href="https://github.com/laravel/framework/issues/7046">https://github.com/laravel/framework/issues/7046</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">laravel</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/29/laravel%20job%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%BC%8F%E4%B8%8B%20%E5%81%B6%E5%8F%91%E6%95%B0%E6%8D%AE%E5%BA%93%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1063,11 +1064,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">php</a>
+                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">wkhtmltopdf</a>
+                <a href="javascript:void(0)" class="js-tag color4">php</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1116,6 +1117,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">nginx logrotate goaccess</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">pgsql</a>
               </li>
              
               <li class="article-tag-list-item">
